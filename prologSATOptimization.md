@@ -182,6 +182,9 @@ Below are specific Prolog clauses used to model the constraints of the Gangsters
 **Objective:**
 Ensure that for every task `T` and every hour `H`, at least `N` available gangsters are assigned to perform task `T`.
 
+![image](https://github.com/user-attachments/assets/a365f6a7-45f9-4b9e-a5dc-010f58b3beba)
+
+
 **Prolog Implementation:**
 ```prolog
 enoughGangstersAtEachHour :-  
