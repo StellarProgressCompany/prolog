@@ -277,25 +277,3 @@ This clause ensures that exactly `K` handmaids are assigned to each row `R` on e
 
 
 ---
-
-## 📌 Best Practices
-
-- **Intermediate Variables:** For complex equivalences involving both AND and OR operations, introduce intermediate variables to simplify the logical expressions.
-  
-- **Avoid Redundancy:** Ensure that each logical equivalence is represented accurately without unnecessary duplication of clauses.
-  
-- **Consistent Variable Naming:** Use clear and consistent naming conventions for SAT variables to enhance readability and maintainability.
-
-- **Modular Encoding:** Break down complex constraints into smaller, manageable Prolog predicates to simplify debugging and comprehension.
-
----
-
-## 📖 Further Reading
-
-- [Tseitin Transformation](https://en.wikipedia.org/wiki/Tseitin_transformation): Learn how to convert arbitrary logical formulas into CNF.
-  
-- [SAT Solvers](https://en.wikipedia.org/wiki/Satisfiability_problem#SAT_solvers): Understand the algorithms and strategies used by SAT solvers like Kissat.
-
-- [Prolog Programming](https://www.swi-prolog.org/pldoc/doc_for?object=manual): Dive deeper into Prolog syntax and advanced features.
-
----
