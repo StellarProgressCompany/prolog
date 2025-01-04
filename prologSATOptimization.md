@@ -15,7 +15,10 @@
 
 ## Theory
 
-### a. **atMost**
+##  Table of Contents
+![image](https://github.com/user-attachments/assets/84624c19-c624-4ecb-bf63-9cf276553bb2)
+
+### **atMost**
 
 **Definition:**
 Ensures that the sum of certain boolean variables does not exceed a specified value.
@@ -129,8 +132,7 @@ exactly(K, Lits)
 In Prolog, `exactly(K, Lits)` combines `atLeast(K, Lits)` and `atMost(K, Lits)` to ensure exactly `K` literals in `Lits` are true.
 
 
-##  Table of Contents
-![image](https://github.com/user-attachments/assets/84624c19-c624-4ecb-bf63-9cf276553bb2)
+
 
 
 ---
