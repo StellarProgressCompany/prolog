@@ -263,41 +263,31 @@ Comparison operators are used to compare two arithmetic expressions. They do not
 
 ##### **1.2.3. Logical Operators**
 
-Logical operators are used to build complex logical expressions by combining simpler ones.
-
-- **Negation (`\+`)**
-  - **Definition**: Succeeds if the goal that follows it fails.
-  - **Usage**: Represents logical NOT.
+- **Comma (`,`)**: Logical AND
+  - **Usage**: Combines multiple goals that must all succeed.
   - **Example**:
     ```prolog
-    ?- \+ member(d, [a, b, c]).
-    true.
+    % A person is eligible if they are over 18 and have a valid ID
+    eligible(Person) :- over_18(Person), has_valid_id(Person).
+    ```
+
+- **Semicolon (`;`)**: Logical OR
+  - **Usage**: Offers alternative goals where at least one must succeed.
+  - **Example**:
+    ```prolog
+    % A person can be a student or a teacher
+    role(Person, student) :- student(Person).
+    role(Person, teacher) :- teacher(Person).
+    ```
+
+- **Negation as Failure (`\+`)**
+  - **Definition**: Succeeds if the enclosed goal fails.
+  - **Usage**:
+    ```prolog
+    % A person is not a student
+    not_student(Person) :- \+ student(Person).
+    ```
     
-    ?- \+ member(b, [a, b, c]).
-    false.
-    ```
-
-- **Conjunction (`,`)**
-  - **Definition**: Represents logical AND; both goals must succeed.
-  - **Usage**: Combines multiple conditions that must all be true.
-  - **Example**:
-    ```prolog
-    ?- X = 2, Y = 3.
-    X = 2,
-    Y = 3.
-    ```
-
-- **Disjunction (`;`)**
-  - **Definition**: Represents logical OR; at least one goal must succeed.
-  - **Usage**: Offers alternative conditions.
-  - **Example**:
-    ```prolog
-    ?- member(X, [a, b]); member(X, [c, d]).
-    X = a ;
-    X = b ;
-    X = c ;
-    X = d.
-    ```
 
 ##### **1.2.4. Unification and Equality Operators**
 
@@ -402,133 +392,6 @@ Understanding operator precedence and associativity is crucial to correctly inte
   % A person is happy if they have money and are healthy
   happy(Person) :- has_money(Person), healthy(Person).
   ```
-
-##### **1.2.8. Conditional Operators**
-
-Prolog supports various conditional constructs to handle different scenarios within rules.
-
-- **If-Then (`->`)**
-  - **Definition**: Represents a conditional; if the condition is true, then perform the action.
-  - **Usage**:
-    ```prolog
-    (Condition -> Then ; Else)
-    ```
-  - **Example**:
-    ```prolog
-    % Assign a status based on age
-    (age(Person, Age), Age >= 18 -> Status = adult ; Status = minor).
-    ```
-
-- **If-Then-Else (`-> ;`)**
-  - **Definition**: Combines the if-then and else clauses in a single expression.
-  - **Usage**:
-    ```prolog
-    (Condition -> Then ; Else)
-    ```
-  - **Example**:
-    ```prolog
-    % Determine if a number is even or odd
-    (0 is N mod 2 -> Status = even ; Status = odd).
-    ```
-
-##### **1.2.9. List Operators**
-
-Prolog provides specific operators for list manipulation, enhancing readability and efficiency.
-
-- **List Construction (`[Head|Tail]`)**
-  - **Definition**: Splits a list into its head and tail or constructs a new list by prepending an element.
-  - **Usage**:
-    ```prolog
-    % Splitting a list
-    [H|T] = [a, b, c].
-    % H = a
-    % T = [b, c]
-    
-    % Constructing a list
-    NewList = [a|[b, c, d]].
-    % NewList = [a, b, c, d]
-    ```
-
-- **Concatenation (`++`)** *(Note: `++` is not a standard Prolog operator, but some Prolog implementations may support it as syntactic sugar for `append/3`.)*
-
-- **Difference (`--`)** *(Similarly, not standard; used in some Prolog libraries for list difference operations.)*
-
-##### **1.2.10. Miscellaneous Operators**
-
-- **Comma (`,`)**: Logical AND
-  - **Usage**: Combines multiple goals that must all succeed.
-  - **Example**:
-    ```prolog
-    % A person is eligible if they are over 18 and have a valid ID
-    eligible(Person) :- over_18(Person), has_valid_id(Person).
-    ```
-
-- **Semicolon (`;`)**: Logical OR
-  - **Usage**: Offers alternative goals where at least one must succeed.
-  - **Example**:
-    ```prolog
-    % A person can be a student or a teacher
-    role(Person, student) :- student(Person).
-    role(Person, teacher) :- teacher(Person).
-    ```
-
-- **Negation as Failure (`\+`)**
-  - **Definition**: Succeeds if the enclosed goal fails.
-  - **Usage**:
-    ```prolog
-    % A person is not a student
-    not_student(Person) :- \+ student(Person).
-    ```
-
-##### **1.2.11. Defining Custom Operators**
-
-Prolog allows the definition of custom operators to improve code readability.
-
-- **Syntax**:
-  ```prolog
-  :- op(Precedence, Type, Operator).
-  ```
-  
-- **Parameters**:
-  - **Precedence**: An integer between 0 and 1200 determining the operator's priority.
-  - **Type**: Specifies the operator's associativity (`xfx`, `xfy`, `yfx`, `fx`, `fy`, `xf`).
-  - **Operator**: The symbol representing the operator.
-
-- **Example**:
-  ```prolog
-  % Define a new infix operator `**` for exponentiation
-  :- op(500, yfx, **).
-  
-  % Usage of the custom operator
-  ?- X is 2 ** 3.
-  X = 8.
-  ```
-
-- **Types of Operator Associativity**:
-  - **xfx**: Non-associative infix
-  - **xfy**: Right-associative infix
-  - **yfx**: Left-associative infix
-  - **fx**: Prefix
-  - **fy**: Prefix, allowing chaining
-  - **xf**: Postfix
-  - **yf**: Postfix, allowing chaining
-
-- **Example of Associativity**:
-  ```prolog
-  % Define a right-associative operator `=>`
-  :- op(400, xfy, =>).
-  
-  % Define a left-associative operator `<=`
-  :- op(400, yfx, <=).
-  
-  % Usage
-  ?- write((a => b => c)), nl.
-  (a => (b => c))
-  
-  ?- write((a <= b <= c)), nl.
-  ((a <= b) <= c)
-  ```
-
 
 
 ### 1.3. Lists
