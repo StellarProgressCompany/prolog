@@ -128,11 +128,8 @@ exactly(K, Lits)
 **Explanation:**
 In Prolog, `exactly(K, Lits)` combines `atLeast(K, Lits)` and `atMost(K, Lits)` to ensure exactly `K` literals in `Lits` are true.
 
----
 
----
-
-## 🔍 Quick Reference
+##  Table of Contents
 ![image](https://github.com/user-attachments/assets/84624c19-c624-4ecb-bf63-9cf276553bb2)
 
 
