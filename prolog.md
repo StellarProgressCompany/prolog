@@ -1,4 +1,3 @@
-```markdown
 # Prolog Cheat Sheet
 
 A comprehensive cheat sheet covering Prolog concepts from basic syntax to advanced topics such as SAT optimization, graph algorithms, and Constraint Logic Programming (CLP). Use this as a quick reference for your exam.
