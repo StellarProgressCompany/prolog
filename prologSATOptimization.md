@@ -167,7 +167,6 @@ To effectively model the Gangsters Problem, several definitions and SAT variable
     - **Meaning:** "Gangster `G` is busy at hour `H`."
     - **Usage:** Helps in enforcing constraints related to gangster availability and task assignments.
 
-- **Additional Variables for the Exam:**
   - `doesTask(G, T)`: Represents that gangster `G` performs task `T` at least once during the planning period.
     - **Meaning:** "Gangster `G` does task `T`."
     - **Usage:** Facilitates constraints on the number of different tasks a gangster can perform.
