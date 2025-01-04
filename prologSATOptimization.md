@@ -208,6 +208,8 @@ enoughGangstersAtEachHour.
 **Objective:**
 Ensure that each gangster is assigned to at most one task per hour.
 
+![image](https://github.com/user-attachments/assets/fbf62479-753b-487b-9a8d-f465cfa752fa)
+
 **Prolog Implementation:**
 ```prolog
 eachHourEachGangsterAtMostOneTask :- 
@@ -229,6 +231,8 @@ eachHourEachGangsterAtMostOneTask.
 
 **Objective:**
 Prevent any gangster from performing two different tasks in consecutive hours.
+
+![image](https://github.com/user-attachments/assets/4ceaa8c0-6272-4eea-8124-172dd2957bf8)
 
 **Prolog Implementation:**
 ```prolog
@@ -255,6 +259,8 @@ noGangsterDoesTwoDifferentTasksConsecutively.
 
 **Objective:**
 Link the `does(G, T, H)` variables with the `busyAtHour(G, H)` variables, ensuring consistency between task assignments and gangster availability.
+
+![image](https://github.com/user-attachments/assets/ed5b097c-e921-48d1-9320-f0371cf02c8b)
 
 **Prolog Implementation:**
 ```prolog
