@@ -567,6 +567,25 @@ Beyond the basics, Prolog offers a suite of advanced predicates that facilitate 
 
 #### **1.4.1. `findall/3`**
 
+
+**Understanding `findall/3`**
+
+The `findall/3` predicate in Prolog is used to gather all possible solutions to a query into a list. Its general syntax is:
+
+```prolog
+findall(Template, Goal, List)
+```
+
+- **Template**: Specifies **what** to collect from each solution.
+- **Goal**: The Prolog query or condition to satisfy.
+- **List**: The resulting list containing all instances of the **Template** that satisfy the **Goal**.
+
+**Key Point:**
+
+- **Template** determines **what** part of the **Goal's** solution you want to collect.
+- The **Goal** defines **how** to find the solutions.
+
+
 ### **Example 1: Collecting Numbers Within a Range**
 
 **Goal:** Collect all integers from 1 to 5.
