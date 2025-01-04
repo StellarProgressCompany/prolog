@@ -1,11 +1,14 @@
 # Prolog Cheat Sheet
 
-A comprehensive cheat sheet covering Prolog concepts from basic syntax to advanced topics such as SAT optimization, graph algorithms, and Constraint Logic Programming (CLP). Use this as a quick reference for your exam.
+A comprehensive cheat sheet covering Prolog concepts from basic syntax to advanced topics. Use this as a quick reference for your exams and future projects.
 
 ## Table of Contents
 
 1. [Prolog Basic Syntax](#1-prolog-basic-syntax)
-2. [SAT Optimization (Gangsters Problem)](#2-sat-optimization-gangsters-problem)
+   1. [Basic Prolog](#11-basic-prolog)
+   2. [Lists](#12-lists)
+   3. [Advanced Predicates](#13-advanced-predicates)
+2. [SAT Optimization](#2-sat-optimization)
 3. [Advanced Prolog (Graph Manipulation)](#3-advanced-prolog-graph-manipulation)
 4. [Constraint Logic Programming (CLP) FD - Pseudo-Boolean Constraints](#4-constraint-logic-programming-clp-fd---pseudo-boolean-constraints)
 
@@ -13,85 +16,557 @@ A comprehensive cheat sheet covering Prolog concepts from basic syntax to advanc
 
 ## 1. Prolog Basic Syntax
 
-### **1.1. Facts**
+Understanding the foundational elements of Prolog is crucial for writing effective programs. This section covers the essentials, including facts, rules, variables, predicates, lists, comments, control constructs, and useful built-in predicates.
 
-- **Definition**: Basic assertions about the world.
+### 1.1. Basic Prolog
+
+#### **1.1.1. Facts**
+
+- **Definition**: Basic assertions about the world that are unconditionally true.
 - **Syntax**: `predicate(argument1, argument2, ...).`
 - **Example**:
   ```prolog
+  % Declares that g01 is a gangster
   gangster(g01).
-  notAvailable(g01, [6,13,14,16,21,35,37,41,59]).
   
+  % Specifies the hours when g01 is not available
+  notAvailable(g01, [6,13,14,16,21,35,37,41,59]).
+  ```
 
-### **1.2. Rules**
+#### **1.1.2. Rules**
 
-- **Definition**: Logical implications that define relationships between facts.
+- **Definition**: Logical implications that define relationships between facts and derive new information.
 - **Syntax**: `Head :- Body.`
 - **Example**:
   ```prolog
+  % A gangster is available at hour H if H is a valid hour,
+  % the individual is a gangster, and they are not blocked at H
   available(G, H) :- hour(H), gangster(G), \+ blocked(G, H).
+  ```
 
+#### **1.1.3. Variables**
 
-### **1.3. Variables**
+- **Definition**: Placeholders that can be unified with constants, atoms, or other variables.
+- **Naming**: Start with uppercase letters or underscores (`_`). Variables are case-sensitive.
+- **Examples**:
+  - `G`, `H`, `Cost`
+  - `_Temp`, `X1`, `Y_variable`
 
-- **Definition**: Placeholders that can be unified with terms.
-- **Naming**: Start with uppercase letters or underscores.
-- **Example**: `G`, `H`, `Cost`
+#### **1.1.4. Predicates**
 
-### **1.4. Predicates**
-
-- **Definition**: Relations defined by facts and rules.
-- **Usage**: Serve as the primary means of computation and querying.
+- **Definition**: Relations defined by facts and rules. They are the primary means of computation and querying in Prolog.
+- **Usage**: Represent properties, relationships, or actions.
 - **Example**:
   ```prolog
+  % Defines a task with identifier T
   task(T).
+  
+  % Specifies that task T is needed at hour H with quantity N
   needed(T, H, N).
   ```
 
-### **1.5. Lists**
+#### **1.1.5. Comments**
 
-- **Definition**: Ordered collections of elements.
+- **Single-line Comments**: Use `%` to start a comment. Everything after `%` on the same line is ignored.
+  ```prolog
+  % This is a single-line comment
+  gangster(g01). % Declares g01 as a gangster
+  ```
+  
+- **Multi-line Comments**: Enclosed between `/*` and `*/`.
+  ```prolog
+  /*
+    This is a multi-line comment.
+    It can span multiple lines.
+  */
+  ```
+
+#### **1.1.6. Control Constructs**
+
+- **Cut (`!`)**
+  - **Definition**: Prunes Prolog's search tree, preventing backtracking beyond the point where the cut appears.
+  - **Usage**:
+    ```prolog
+    % Prevents Prolog from considering alternative solutions once condition is met
+    predicate :- condition, !, action.
+    ```
+  - **Example**:
+    ```prolog
+    max(X, Y, X) :- X >= Y, !.
+    max(X, Y, Y) :- X < Y.
+    ```
+  
+- **Failure (`fail`)**
+  - **Definition**: Forces a predicate to fail, useful for iterative processes or generating multiple solutions.
+  - **Usage**:
+    ```prolog
+    somePredicate :- action, fail.
+    somePredicate.
+    ```
+  - **Example**:
+    ```prolog
+    % Prints all elements in a list
+    print_all([]).
+    print_all([H|T]) :- write(H), nl, print_all(T).
+    
+    % Alternative using fail for backtracking
+    print_all_fail(List) :-
+        member(X, List),
+        write(X), nl,
+        fail.
+    print_all_fail(_).
+    ```
+
+### 1.2. Lists
+
+Lists are fundamental data structures in Prolog, representing ordered collections of elements. They are versatile and widely used in various algorithms and data manipulations.
+
+#### **1.2.1. List Basics**
+
+- **Definition**: Ordered sequences of elements, which can be heterogeneous (different types).
 - **Syntax**: `[Element1, Element2, ..., ElementN]`
+- **Examples**:
+  ```prolog
+  % Empty list
+  []
+  
+  % List of integers
+  [1, 2, 3, 4]
+  
+  % Mixed list
+  [g01, "task", 3, [sublist]].
+  ```
+
+#### **1.2.2. Head and Tail**
+
+- **Definition**: The first element of a list is the head, and the remainder of the list is the tail.
+- **Syntax**: `[Head|Tail]`
+- **Examples**:
+  ```prolog
+  % Splitting a list into head and tail
+  [H|T] = [a, b, c, d].
+  % H = a
+  % T = [b, c, d]
+  ```
+
+#### **1.2.3. Common List Predicates**
+
+1. **`member/2`**
+   - **Purpose**: Checks if an element is part of a list.
+   - **Syntax**: `member(Element, List).`
+   - **Example**:
+     ```prolog
+     ?- member(b, [a, b, c]).
+     true.
+     
+     ?- member(d, [a, b, c]).
+     false.
+     ```
+   - **Usage in Definitions**:
+     ```prolog
+     % Define blocked hours
+     blocked(G, H) :- notAvailable(G, L), member(H, L).
+     ```
+
+2. **`append/3`**
+   - **Purpose**: Concatenates two lists.
+   - **Syntax**: `append(List1, List2, Result).`
+   - **Example**:
+     ```prolog
+     ?- append([a, b], [c, d], X).
+     X = [a, b, c, d].
+     
+     ?- append(X, Y, [1, 2, 3]).
+     X = [],
+     Y = [1, 2, 3];
+     X = [1],
+     Y = [2, 3];
+     X = [1, 2],
+     Y = [3];
+     X = [1, 2, 3],
+     Y = [].
+     ```
+
+3. **`length/2`**
+   - **Purpose**: Determines the length of a list or creates a list of a certain length.
+   - **Syntax**: `length(List, Length).`
+   - **Example**:
+     ```prolog
+     ?- length([a, b, c], N).
+     N = 3.
+     
+     ?- length(X, 2).
+     X = [_G1, _G2].
+     ```
+
+4. **`nth1/3`**
+   - **Purpose**: Retrieves the N-th element from a list (1-based indexing).
+   - **Syntax**: `nth1(Index, List, Element).`
+   - **Example**:
+     ```prolog
+     ?- nth1(2, [a, b, c], X).
+     X = b.
+     
+     ?- nth1(4, [a, b, c], X).
+     false.
+     ```
+
+5. **`findall/3`**
+   - **Purpose**: Collects all possible solutions that satisfy a certain condition into a list.
+   - **Syntax**: `findall(Template, Goal, List).`
+   - **Example**:
+     ```prolog
+     % Collect all even numbers from 1 to 5
+     ?- findall(X, (between(1, 5, X), X mod 2 =:= 0), L).
+     L = [2, 4].
+     ```
+
+6. **`maplist/2` and `maplist/3`**
+   - **Purpose**: Applies a predicate to each element of a list.
+   - **Syntax**:
+     - `maplist(Predicate, List).`
+     - `maplist(Predicate, List1, List2).`
+   - **Example**:
+     ```prolog
+     % Increment each number in the list
+     increment(X, Y) :- Y is X + 1.
+     
+     ?- maplist(increment, [1, 2, 3], L).
+     L = [2, 3, 4].
+     ```
+
+7. **`select/3`**
+   - **Purpose**: Selects an element from a list, returning the element and the remaining list.
+   - **Syntax**: `select(Element, List, Rest).`
+   - **Example**:
+     ```prolog
+     ?- select(b, [a, b, c], X).
+     X = [a, c].
+     
+     ?- select(X, [1, 2, 3], [1, 3]).
+     X = 2.
+     ```
+
+8. **`reverse/2`**
+   - **Purpose**: Reverses a list.
+   - **Syntax**: `reverse(List, Reversed).`
+   - **Example**:
+     ```prolog
+     ?- reverse([a, b, c], X).
+     X = [c, b, a].
+     ```
+
+#### **1.2.4. Recursive List Processing**
+
+Many list operations in Prolog are defined recursively. Understanding recursion is key to manipulating lists effectively.
+
+- **Example: Summing Elements in a List**
+  ```prolog
+  sum_list([], 0).
+  sum_list([H|T], Sum) :-
+      sum_list(T, Rest),
+      Sum is H + Rest.
+  
+  % Usage:
+  ?- sum_list([1, 2, 3, 4], Sum).
+  Sum = 10.
+  ```
+
+- **Example: Finding the Maximum Element**
+  ```prolog
+  max_list([X], X).
+  max_list([H|T], Max) :-
+      max_list(T, TempMax),
+      Max is max(H, TempMax).
+  
+  % Usage:
+  ?- max_list([3, 1, 4, 2], Max).
+  Max = 4.
+  ```
+
+### 1.3. Advanced Predicates
+
+Beyond the basics, Prolog offers a suite of advanced predicates that facilitate complex operations, especially when dealing with logic programming and constraint solving.
+
+#### **1.3.1. `findall/3`**
+
+- **Purpose**: Gathers all possible instances that satisfy a particular goal into a list.
+- **Syntax**: `findall(Template, Goal, List).`
 - **Example**:
   ```prolog
-  gangsters([g01, g02, g03, g04, g05, g06, g07, g08, g09, g10, g11, g12]).
+  % Find all tasks that gangster G is available to perform at hour H
+  available_tasks(G, H, Tasks) :-
+      findall(T, (task(T), available(G, H)), Tasks).
+  
+  % Usage:
+  ?- available_tasks(g01, 10, Tasks).
+  Tasks = [killing, countingMoney, politics].
   ```
 
-### **1.6. Comments**
+#### **1.3.2. `expressOr/2` and `expressAnd/2`**
 
-- **Single-line**: `% This is a comment`
-- **Multi-line**: `/* This is a multi-line comment */`
+- **Purpose**: Define logical relationships between variables and lists of literals, often used in SAT encoding.
+  
+- **`expressOr(Var, Lits)`**
+  - **Definition**: Specifies that `Var` is true if at least one literal in `Lits` is true.
+  - **Usage**:
+    ```prolog
+    expressOr(a, [x, y]).
+    ```
+    Translates to: `a <--> (x ∨ y)`
+  
+- **`expressAnd(Var, Lits)`**
+  - **Definition**: Specifies that `Var` is true only if all literals in `Lits` are true.
+  - **Usage**:
+    ```prolog
+    expressAnd(b, [x, y, z]).
+    ```
+    Translates to: `b <--> (x ∧ y ∧ z)`
 
-### **1.7. Built-in Predicates**
-
-- **`member/2`**: Checks if an element is in a list.
+- **Example Implementation**:
   ```prolog
-  member(X, [X|_]).
-  member(X, [_|T]) :- member(X, T).
-  ```
-- **`nth1/3`**: Retrieves the N-th element from a list (1-based indexing).
-  ```prolog
-  nth1(2, [a, b, c], Element). % Element = b
-  ```
-- **`findall/3`**: Collects all possible solutions.
-  ```prolog
-  findall(X, member(X, [1,2,3]), List). % List = [1,2,3]
-  ```
-- **`between/3`**: Generates numbers within a range.
-  ```prolog
-  between(1, 5, X). % X = 1; X = 2; ...; X = 5
+  expressOr(Var, Lits) :-
+      % Var is true if any of Lits is true
+      write(Var), write(' is true if any of '), write(Lits), nl,
+      % Additional logic to encode this relationship
+      ...
+  
+  expressAnd(Var, Lits) :-
+      % Var is true only if all of Lits are true
+      write(Var), write(' is true only if all of '), write(Lits), nl,
+      % Additional logic to encode this relationship
+      ...
   ```
 
-### **1.8. Control Constructs**
+#### **1.3.3. Cardinality Constraints (`atLeast/2`, `atMost/2`, `exactly/2`)**
 
-- **Cut (`!`)**: Prevents backtracking beyond the cut.
+- **Purpose**: Enforce constraints on the number of literals that can be true within a list.
+  
+- **`atLeast(K, Lits)`**
+  - **Definition**: At least `K` literals in `Lits` must be true.
+  - **Example**:
+    ```prolog
+    % At least 2 gangsters must be available at hour H for task T
+    atLeast(2, [does(g01, T, H), does(g02, T, H), does(g03, T, H)]).
+    ```
+  
+- **`atMost(K, Lits)`**
+  - **Definition**: At most `K` literals in `Lits` can be true.
+  - **Example**:
+    ```prolog
+    % At most 1 task can be assigned to gangster G at hour H
+    atMost(1, [does(G, killing, H), does(G, countingMoney, H), does(G, politics, H)]).
+    ```
+  
+- **`exactly(K, Lits)`**
+  - **Definition**: Exactly `K` literals in `Lits` must be true.
+  - **Example**:
+    ```prolog
+    % Exactly 3 gangsters must be available for task T at hour H
+    exactly(3, [does(g01, T, H), does(g02, T, H), does(g03, T, H), does(g04, T, H)]).
+    ```
+  
+- **Example Implementation**:
   ```prolog
-  predicate :- condition, !, action.
+  atLeast(K, Lits) :-
+      % Ensure at least K literals in Lits are true
+      ...
+  
+  atMost(K, Lits) :-
+      % Ensure at most K literals in Lits are true
+      ...
+  
+  exactly(K, Lits) :-
+      atLeast(K, Lits),
+      atMost(K, Lits).
   ```
-- **Failure (`fail`)**: Forces a predicate to fail, useful in iterative constructs.
+
+#### **1.3.4. `writeOneClause/1`**
+
+- **Purpose**: Outputs a clause (a disjunction of literals) to a file or standard output, often used in SAT encoding.
+- **Syntax**: `writeOneClause([Literal1, Literal2, ..., LiteralN]).`
+- **Example**:
   ```prolog
-  somePredicate :- action, fail.
-  somePredicate.
+  % Writes the clause (¬does(g01, killing, 1) ∨ ¬does(g02, countingMoney, 2))
+  writeOneClause([-does(g01, killing, 1), -does(g02, countingMoney, 2)]).
+  ```
+
+- **Example Implementation**:
+  ```prolog
+  writeOneClause([]) :- 
+      % Represents an empty clause, which is always false
+      write('0'), nl.
+  
+  writeOneClause([Lit|Lits]) :- 
+      write(Lit), write(' '),
+      writeOneClause(Lits).
+  writeOneClause([]) :- write('0'), nl.
+  ```
+
+#### **1.3.5. Higher-Order Predicates**
+
+- **`maplist/2` and `maplist/3`**
+  - **Purpose**: Apply a predicate to each element (or corresponding elements) of a list.
+  - **Syntax**:
+    - `maplist(Predicate, List).`
+    - `maplist(Predicate, List1, List2).`
+  - **Example**:
+    ```prolog
+    % Define a predicate to double a number
+    double(X, Y) :- Y is X * 2.
+    
+    % Apply 'double' to each element in the list
+    ?- maplist(double, [1, 2, 3], Doubled).
+    Doubled = [2, 4, 6].
+    ```
+
+- **`include/3` and `exclude/3`**
+  - **Purpose**: Filter elements of a list based on a predicate.
+  - **Syntax**:
+    - `include(Predicate, List, Included).`
+    - `exclude(Predicate, List, Excluded).`
+  - **Example**:
+    ```prolog
+    % Define a predicate to check if a number is even
+    is_even(X) :- 0 is X mod 2.
+    
+    % Include only even numbers
+    ?- include(is_even, [1, 2, 3, 4], Evens).
+    Evens = [2, 4].
+    
+    % Exclude even numbers
+    ?- exclude(is_even, [1, 2, 3, 4], Odds).
+    Odds = [1, 3].
+    ```
+
+#### **1.3.6. Defining Custom Predicates**
+
+Creating custom predicates allows you to encapsulate logic and reuse code efficiently.
+
+- **Example: Checking Availability**
+  ```prolog
+  % A gangster is available at hour H if they are a gangster and H is a valid hour
+  % and they are not blocked at H.
+  available(G, H) :- 
+      gangster(G), 
+      hour(H), 
+      \+ blocked(G, H).
+  ```
+
+- **Example: Assigning Tasks**
+  ```prolog
+  % Assign task T to gangster G at hour H if G is available
+  assign_task(G, T, H) :- 
+      available(G, H), 
+      does(G, T, H).
+  ```
+
+#### **1.3.7. Recursion**
+
+Recursion allows Prolog to perform iterative computations by having predicates call themselves with modified arguments.
+
+- **Example: Calculating Factorial**
+  ```prolog
+  factorial(0, 1).
+  factorial(N, F) :-
+      N > 0,
+      N1 is N - 1,
+      factorial(N1, F1),
+      F is N * F1.
+  
+  % Usage:
+  ?- factorial(5, F).
+  F = 120.
+  ```
+
+- **Example: Traversing a List**
+  ```prolog
+  % Prints each element of a list
+  print_list([]).
+  print_list([H|T]) :-
+      write(H), nl,
+      print_list(T).
+  
+  % Usage:
+  ?- print_list([a, b, c]).
+  a
+  b
+  c
+  ```
+
+#### **1.3.8. Error Handling and Guards**
+
+Using guards and conditions to handle different cases and prevent errors.
+
+- **Example: Safe Division**
+  ```prolog
+  safe_divide(_, 0, _) :- 
+      write('Error: Division by zero.'), nl, 
+      fail.
+  safe_divide(X, Y, Z) :- 
+      Z is X / Y.
+  
+  % Usage:
+  ?- safe_divide(10, 2, Z).
+  Z = 5.
+  
+  ?- safe_divide(10, 0, Z).
+  Error: Division by zero.
+  false.
+  ```
+
+#### **1.3.9. Meta-Predicates**
+
+Predicates that take other predicates as arguments, enabling higher-order programming.
+
+- **Example: `call/1`**
+  ```prolog
+  % Executes a predicate passed as an argument
+  execute(Predicate) :- 
+      call(Predicate).
+  
+  % Usage:
+  ?- execute(write('Hello, World!')).
+  Hello, World!
+  true.
+  ```
+
+- **Example: `maplist/2` with `call/2`**
+  ```prolog
+  % Apply a predicate with an additional argument to each element
+  apply_increment(List, Incremented) :-
+      maplist(call(increment), List, Incremented).
+  
+  increment(X, Y) :- Y is X + 1.
+  
+  % Usage:
+  ?- apply_increment([1, 2, 3], L).
+  L = [2, 3, 4].
+  ```
+
+#### **1.3.10. Constraint Logic Programming Predicates**
+
+When working with constraints, certain predicates help define and solve constraints efficiently.
+
+- **Example: Using `label/1`**
+  ```prolog
+  % Define variables with domains and assign values
+  solve(X, Y) :-
+      X in 1..5,
+      Y in 1..5,
+      X + Y #= 5,
+      label([X, Y]).
+  
+  % Usage:
+  ?- solve(X, Y).
+  X = 1,
+  Y = 4 ;
+  X = 2,
+  Y = 3 ;
+  X = 3,
+  Y = 2 ;
+  X = 4,
+  Y = 1.
   ```
 
 ---
