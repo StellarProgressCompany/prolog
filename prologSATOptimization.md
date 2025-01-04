@@ -24,9 +24,8 @@
 Ensures that the sum of certain boolean variables does not exceed a specified value.
 
 **Mathematical Expression:**
-\[
-\sum_{i=1}^{n} x_i \leq K
-\]
+![image](https://github.com/user-attachments/assets/13695c92-7a39-4883-947b-323daef9c67c)
+
 
 **Prolog Encoding:**
 ```prolog
@@ -44,9 +43,7 @@ In Prolog, `atMost(K, Lits)` generates clauses to ensure that no more than `K` l
 Ensures that the sum of certain boolean variables is at least a specified value.
 
 **Mathematical Expression:**
-\[
-\sum_{i=1}^{n} x_i \geq K
-\]
+![image](https://github.com/user-attachments/assets/13695c92-7a39-4883-947b-323daef9c67c)
 
 **Prolog Encoding:**
 ```prolog
@@ -64,9 +61,8 @@ In Prolog, `atLeast(K, Lits)` generates clauses to ensure that at least `K` lite
 Establishes a logical equivalence where a variable is true if and only if at least one variable in a list is true.
 
 **Mathematical Expression:**
-\[
-Var \leftrightarrow (A \lor B \lor \dots \lor N)
-\]
+![image](https://github.com/user-attachments/assets/ca23d933-c3e6-4896-94ed-441b90b9f7da)
+
 
 **Prolog Encoding:**
 ```prolog
@@ -84,9 +80,8 @@ In Prolog, `expressOr(Var, Lits)` creates clauses that ensure `Var` is true exac
 Establishes a logical equivalence where a variable is true if and only if all variables in a list are true.
 
 **Mathematical Expression:**
-\[
-Var \leftrightarrow (A \land B \land \dots \land N)
-\]
+![image](https://github.com/user-attachments/assets/a90f98c6-4ea0-4052-a1df-dc15be74fcea)
+
 
 **Prolog Encoding:**
 ```prolog
@@ -119,9 +114,8 @@ In Prolog, `writeOneClause(Lits)` writes a clause where at least one literal in 
 Ensures that exactly a specified number of boolean variables are true.
 
 **Mathematical Expression:**
-\[
-\sum_{i=1}^{n} x_i = K
-\]
+![image](https://github.com/user-attachments/assets/a317d790-3200-4067-bcbe-1394fc78b942)
+
 
 **Prolog Encoding:**
 ```prolog
