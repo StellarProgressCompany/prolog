@@ -567,18 +567,90 @@ Beyond the basics, Prolog offers a suite of advanced predicates that facilitate 
 
 #### **1.4.1. `findall/3`**
 
-- **Purpose**: Gathers all possible instances that satisfy a particular goal into a list.
-- **Syntax**: `findall(Template, Goal, List).`
-- **Example**:
-  ```prolog
-  % Find all tasks that gangster G is available to perform at hour H
-  available_tasks(G, H, Tasks) :-
-      findall(T, (task(T), available(G, H)), Tasks).
-  
-  % Usage:
-  ?- available_tasks(g01, 10, Tasks).
-  Tasks = [killing, countingMoney, politics].
-  ```
+### **Example 1: Collecting Numbers Within a Range**
+
+**Goal:** Collect all integers from 1 to 5.
+
+#### **Prolog Code:**
+
+```prolog
+% Query to collect numbers from 1 to 5
+?- findall(N, between(1, 5, N), Numbers).
+```
+
+#### **Explanation:**
+
+- **Template (`N`):** Represents each number in the range.
+- **Goal (`between(1, 5, N)`):** Generates numbers `N` starting from 1 up to 5.
+- **List (`Numbers`):** Collects all generated numbers into the list `Numbers`.
+
+#### **Result:**
+
+```prolog
+Numbers = [1, 2, 3, 4, 5].
+```
+
+---
+
+### **Example 2: Collecting Even Numbers**
+
+**Goal:** Collect all even numbers from 2 to 10.
+
+#### **Prolog Code:**
+
+```prolog
+% Define a predicate to check if a number is even
+even(N) :- 0 is N mod 2.
+
+% Query to collect even numbers from 2 to 10
+?- findall(N, (between(2, 10, N), even(N)), EvenNumbers).
+```
+
+#### **Explanation:**
+
+1. **Predicate (`even/1`):**
+   - `even(N) :- 0 is N mod 2.` checks if `N` is divisible by 2 (i.e., even).
+
+2. **findall/3 Usage:**
+   - **Template (`N`):** Each even number.
+   - **Goal (`between(2, 10, N), even(N)`):**
+     - `between(2, 10, N)`: Generates numbers from 2 to 10.
+     - `even(N)`: Filters to include only even numbers.
+   - **List (`EvenNumbers`):** Collects all even numbers into `EvenNumbers`.
+
+#### **Result:**
+
+```prolog
+EvenNumbers = [2, 4, 6, 8, 10].
+```
+
+---
+
+### **Example 3: Collecting Squares of Numbers**
+
+**Goal:** Collect the squares of numbers from 1 to 5.
+
+#### **Prolog Code:**
+
+```prolog
+% Query to collect squares of numbers from 1 to 5
+?- findall(Square, (between(1, 5, N), Square is N * N), Squares).
+```
+
+#### **Explanation:**
+
+- **Template (`Square`):** Represents the square of each number.
+- **Goal (`between(1, 5, N), Square is N * N`):**
+  - `between(1, 5, N)`: Generates numbers from 1 to 5.
+  - `Square is N * N`: Calculates the square of `N`.
+- **List (`Squares`):** Collects all squared values into `Squares`.
+
+#### **Result:**
+
+```prolog
+Squares = [1, 4, 9, 16, 25].
+```
+
 
 #### **1.4.2. `expressOr/2` and `expressAnd/2`**
 
