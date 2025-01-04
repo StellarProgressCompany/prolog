@@ -277,15 +277,8 @@ This clause ensures that exactly `K` handmaids are assigned to each row `R` on e
 ---
 
 ## 🔍 Quick Reference
+![image](https://github.com/user-attachments/assets/84624c19-c624-4ecb-bf63-9cf276553bb2)
 
-| **Mathematical Expression**                    | **Prolog Encoding**                                  | **Description**                                              |
-|------------------------------------------------|------------------------------------------------------|--------------------------------------------------------------|
-| \(\sum x_i \leq K\)                            | `atMost(K, Lits)`                                     | Limits the number of true literals to at most `K`.           |
-| \(\sum x_i \geq K\)                            | `atLeast(K, Lits)`                                    | Ensures at least `K` literals are true.                      |
-| \(Var \leftrightarrow (A \lor B \lor \dots)\) | `expressOr(Var, [A, B, ...])`                        | Links `Var` to the OR of multiple literals.                  |
-| \(Var \leftrightarrow (A \land B \land \dots)\)| `expressAnd(Var, [A, B, ...])`                       | Links `Var` to the AND of multiple literals.                 |
-| \(\neg A \lor \neg B \lor \neg C\)            | `writeOneClause([-A, -B, -C])`                        | Writes a clause representing the disjunction of negations.   |
-| \(\sum x_i = K\)                                | `exactly(K, Lits)`                                    | Ensures exactly `K` literals are true by combining atLeast and atMost. |
 
 ---
 
