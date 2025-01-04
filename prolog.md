@@ -22,7 +22,7 @@ A comprehensive cheat sheet covering Prolog concepts from basic syntax to advanc
   ```prolog
   gangster(g01).
   notAvailable(g01, [6,13,14,16,21,35,37,41,59]).
-  ```
+  
 
 ### **1.2. Rules**
 
@@ -397,3 +397,5 @@ X = [0, 1, 1].
 **Good luck on your exam!**
 
 ```
+
+
