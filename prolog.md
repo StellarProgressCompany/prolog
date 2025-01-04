@@ -31,7 +31,7 @@ A comprehensive cheat sheet covering Prolog concepts from basic syntax to advanc
 - **Example**:
   ```prolog
   available(G, H) :- hour(H), gangster(G), \+ blocked(G, H).
-  ```
+
 
 ### **1.3. Variables**
 
