@@ -25,7 +25,7 @@ Ensures that the sum of certain boolean variables does not exceed a specified va
 
 **Mathematical Expression:**
 
-![image](https://github.com/user-attachments/assets/13695c92-7a39-4883-947b-323daef9c67c)
+![image](https://github.com/user-attachments/assets/722446a1-03fe-464d-962a-c18e7cd8938d)
 
 
 **Prolog Encoding:**
@@ -101,6 +101,9 @@ In Prolog, `expressAnd(Var, Lits)` creates clauses that ensure `Var` is true exa
 
 **Definition:**
 Writes a single clause to the SAT solver's input, representing a disjunction of literals.
+
+![image](https://github.com/user-attachments/assets/805637a1-19b1-4677-a490-b23f07335500)
+
 
 **Prolog Encoding:**
 ```prolog
