@@ -611,40 +611,6 @@ Numbers = [1, 2, 3, 4, 5].
 
 ---
 
-### **Example 2: Collecting Even Numbers**
-
-**Goal:** Collect all even numbers from 2 to 10.
-
-#### **Prolog Code:**
-
-```prolog
-% Define a predicate to check if a number is even
-even(N) :- 0 is N mod 2.
-
-% Query to collect even numbers from 2 to 10
-?- findall(N, (between(2, 10, N), even(N)), EvenNumbers).
-```
-
-#### **Explanation:**
-
-1. **Predicate (`even/1`):**
-   - `even(N) :- 0 is N mod 2.` checks if `N` is divisible by 2 (i.e., even).
-
-2. **findall/3 Usage:**
-   - **Template (`N`):** Each even number.
-   - **Goal (`between(2, 10, N), even(N)`):**
-     - `between(2, 10, N)`: Generates numbers from 2 to 10.
-     - `even(N)`: Filters to include only even numbers.
-   - **List (`EvenNumbers`):** Collects all even numbers into `EvenNumbers`.
-
-#### **Result:**
-
-```prolog
-EvenNumbers = [2, 4, 6, 8, 10].
-```
-
----
-
 ### **Example 3: Collecting Squares of Numbers**
 
 **Goal:** Collect the squares of numbers from 1 to 5.
