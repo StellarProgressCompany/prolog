@@ -1,18 +1,14 @@
 # SAT Optimization Cheat Sheet
 
-Welcome to the SAT Optimization Cheat Sheet! This guide provides a concise overview of key theoretical concepts and practical Prolog encodings used in SAT optimization problems. Whether you're a beginner or looking to refresh your knowledge, this cheat sheet will help you bridge the gap between mathematical formulations and their Prolog implementations.
-
----
-
-## 📑 Index
+## Index
 
 1. [Theory](#theory)
-   - [a. atMost](#a-atmost)
-   - [b. atLeast](#b-atleast)
-   - [c. expressOr](#c-expressor)
-   - [d. expressAnd](#d-expressand)
-   - [e. writeOneClause](#e-writeoneclause)
-   - [f. exactly](#f-exactly)
+   - [atMost](#a-atmost)
+   - [atLeast](#b-atleast)
+   - [expressOr](#c-expressor)
+   - [expressAnd](#d-expressand)
+   - [writeOneClause](#e-writeoneclause)
+   - [exactly](#f-exactly)
 2. [Examples of Clauses in the Gangsters Problem](#examples-of-clauses-in-the-gangsters-problem)
    - [a. atMost Example](#a-atmost-example)
    - [b. atLeast Example](#b-atleast-example)
@@ -23,7 +19,7 @@ Welcome to the SAT Optimization Cheat Sheet! This guide provides a concise overv
 
 ---
 
-## 📚 Theory
+## Theory
 
 ### a. **atMost**
 
