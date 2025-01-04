@@ -132,6 +132,7 @@ exactly(K, Lits)
 
 **Explanation:**
 In Prolog, `exactly(K, Lits)` combines `atLeast(K, Lits)` and `atMost(K, Lits)` to ensure exactly `K` literals in `Lits` are true.
+
 ---
 
 ## Examples of Clauses in the Gangsters Problem
