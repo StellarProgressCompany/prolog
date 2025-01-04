@@ -6,8 +6,9 @@ A comprehensive cheat sheet covering Prolog concepts from basic syntax to advanc
 
 1. [Prolog Basic Syntax](#1-prolog-basic-syntax)
    1. [Basic Prolog](#11-basic-prolog)
-   2. [Lists](#12-lists)
-   3. [Advanced Predicates](#13-advanced-predicates)
+   2. [Operators](#12-operators)
+   3. [Lists](#13-lists)
+   4. [Advanced Predicates](#14-advanced-predicates)
 2. [SAT Optimization](#2-sat-optimization)
 3. [Advanced Prolog (Graph Manipulation)](#3-advanced-prolog-graph-manipulation)
 4. [Constraint Logic Programming (CLP) FD - Pseudo-Boolean Constraints](#4-constraint-logic-programming-clp-fd---pseudo-boolean-constraints)
@@ -116,6 +117,419 @@ Understanding the foundational elements of Prolog is crucial for writing effecti
         fail.
     print_all_fail(_).
     ```
+
+
+### 1.2 Operators
+
+#### **1.2. Operators**
+
+Operators in Prolog are symbols that represent various operations, such as arithmetic calculations, comparisons, and logical operations. Understanding these operators is essential for writing effective and efficient Prolog programs.
+
+##### **1.2.1. Arithmetic Operators**
+
+Prolog provides a range of arithmetic operators for performing calculations. These operators evaluate arithmetic expressions and are used within arithmetic goals.
+
+- **Addition (`+`)**
+  - **Usage**: Adds two numbers.
+  - **Example**:
+    ```prolog
+    ?- X is 2 + 3.
+    X = 5.
+    ```
+
+- **Subtraction (`-`)**
+  - **Usage**: Subtracts one number from another.
+  - **Example**:
+    ```prolog
+    ?- X is 5 - 2.
+    X = 3.
+    ```
+
+- **Multiplication (`*`)**
+  - **Usage**: Multiplies two numbers.
+  - **Example**:
+    ```prolog
+    ?- X is 4 * 3.
+    X = 12.
+    ```
+
+- **Division (`/`)**
+  - **Usage**: Divides one number by another, resulting in a floating-point number.
+  - **Example**:
+    ```prolog
+    ?- X is 10 / 4.
+    X = 2.5.
+    ```
+
+- **Integer Division (`//`)**
+  - **Usage**: Divides one number by another, resulting in an integer by truncating the decimal.
+  - **Example**:
+    ```prolog
+    ?- X is 10 // 4.
+    X = 2.
+    ```
+
+- **Modulus (`mod`)**
+  - **Usage**: Finds the remainder of the division of one number by another.
+  - **Example**:
+    ```prolog
+    ?- X is 10 mod 4.
+    X = 2.
+    ```
+
+- **Exponentiation (`^`)**
+  - **Usage**: Raises a number to the power of another number.
+  - **Example**:
+    ```prolog
+    ?- X is 2 ^ 3.
+    X = 8.
+    ```
+
+##### **1.2.2. Comparison Operators**
+
+Comparison operators are used to compare two arithmetic expressions. They do not evaluate to a value but instead succeed or fail based on the comparison.
+
+- **Equal (`=:=`)**
+  - **Definition**: Succeeds if both arithmetic expressions evaluate to the same number.
+  - **Example**:
+    ```prolog
+    ?- 2 + 3 =:= 5.
+    true.
+    
+    ?- 2 + 2 =:= 5.
+    false.
+    ```
+
+- **Not Equal (`=\=`)**
+  - **Definition**: Succeeds if both arithmetic expressions do not evaluate to the same number.
+  - **Example**:
+    ```prolog
+    ?- 2 + 2 =\= 5.
+    true.
+    
+    ?- 2 + 3 =\= 5.
+    false.
+    ```
+
+- **Less Than (`<`)**
+  - **Definition**: Succeeds if the first arithmetic expression is less than the second.
+  - **Example**:
+    ```prolog
+    ?- 3 < 5.
+    true.
+    
+    ?- 5 < 3.
+    false.
+    ```
+
+- **Greater Than (`>`)**
+  - **Definition**: Succeeds if the first arithmetic expression is greater than the second.
+  - **Example**:
+    ```prolog
+    ?- 5 > 3.
+    true.
+    
+    ?- 3 > 5.
+    false.
+    ```
+
+- **Less Than or Equal (`=<`)**
+  - **Definition**: Succeeds if the first arithmetic expression is less than or equal to the second.
+  - **Example**:
+    ```prolog
+    ?- 3 =< 5.
+    true.
+    
+    ?- 5 =< 5.
+    true.
+    
+    ?- 6 =< 5.
+    false.
+    ```
+
+- **Greater Than or Equal (`>=`)**
+  - **Definition**: Succeeds if the first arithmetic expression is greater than or equal to the second.
+  - **Example**:
+    ```prolog
+    ?- 5 >= 3.
+    true.
+    
+    ?- 5 >= 5.
+    true.
+    
+    ?- 3 >= 5.
+    false.
+    ```
+
+##### **1.2.3. Logical Operators**
+
+Logical operators are used to build complex logical expressions by combining simpler ones.
+
+- **Negation (`\+`)**
+  - **Definition**: Succeeds if the goal that follows it fails.
+  - **Usage**: Represents logical NOT.
+  - **Example**:
+    ```prolog
+    ?- \+ member(d, [a, b, c]).
+    true.
+    
+    ?- \+ member(b, [a, b, c]).
+    false.
+    ```
+
+- **Conjunction (`,`)**
+  - **Definition**: Represents logical AND; both goals must succeed.
+  - **Usage**: Combines multiple conditions that must all be true.
+  - **Example**:
+    ```prolog
+    ?- X = 2, Y = 3.
+    X = 2,
+    Y = 3.
+    ```
+
+- **Disjunction (`;`)**
+  - **Definition**: Represents logical OR; at least one goal must succeed.
+  - **Usage**: Offers alternative conditions.
+  - **Example**:
+    ```prolog
+    ?- member(X, [a, b]); member(X, [c, d]).
+    X = a ;
+    X = b ;
+    X = c ;
+    X = d.
+    ```
+
+##### **1.2.4. Unification and Equality Operators**
+
+These operators are used for pattern matching and variable binding.
+
+- **Unification (`=`)**
+  - **Definition**: Attempts to make two terms identical by finding a suitable substitution for variables.
+  - **Usage**: Binds variables to values to satisfy equality.
+  - **Example**:
+    ```prolog
+    ?- X = 5.
+    X = 5.
+    
+    ?- X = Y.
+    X = Y.
+    
+    ?- X = 5, Y = X.
+    X = 5,
+    Y = 5.
+    ```
+
+- **Strict Equality (`==`)**
+  - **Definition**: Succeeds if both terms are identical without performing any variable bindings.
+  - **Usage**: Checks if two terms are exactly the same.
+  - **Example**:
+    ```prolog
+    ?- 5 == 5.
+    true.
+    
+    ?- X == 5.
+    false.
+    
+    ?- X = 5, X == 5.
+    X = 5.
+    ```
+
+- **Strict Inequality (`\==`)**
+  - **Definition**: Succeeds if two terms are not identical without performing any variable bindings.
+  - **Usage**: Checks if two terms are different.
+  - **Example**:
+    ```prolog
+    ?- 5 \== 3.
+    true.
+    
+    ?- X \== 5.
+    true.
+    
+    ?- X = 5, X \== 5.
+    false.
+    ```
+
+##### **1.2.5. Arithmetic Evaluation (`is`)**
+
+- **Definition**: Evaluates an arithmetic expression on the right-hand side and unifies it with the variable on the left-hand side.
+- **Usage**: Assigns the result of an arithmetic calculation to a variable.
+- **Example**:
+  ```prolog
+  ?- X is 2 + 3.
+  X = 5.
+  
+  ?- Y is X * 2, X is 4.
+  Y = 8,
+  X = 4.
+  
+  ?- Z is 10 / 3.
+  Z = 3.3333333333333335.
+  ```
+
+##### **1.2.6. Operator Precedence and Associativity**
+
+Understanding operator precedence and associativity is crucial to correctly interpret complex expressions.
+
+- **Precedence**: Determines the order in which operators are evaluated.
+- **Associativity**: Determines how operators of the same precedence are grouped in the absence of parentheses.
+
+| Operator               | Precedence | Associativity |
+|------------------------|------------|---------------|
+| `is`                   | 700        | xfx           |
+| `=:=`, `=\=`           | 700        | xfx           |
+| `<`, `>`, `=<`, `>=`   | 700        | xfx           |
+| `+`, `-`               | 500        | yfx           |
+| `*`, `/`, `//`, `mod`, `^` | 400  | yfx           |
+| `\+`                   | 200        | fy            |
+| `,`                    | 100        | xfy           |
+| `;`                    | 100        | xfy           |
+
+- **Example of Precedence**:
+  ```prolog
+  ?- X is 2 + 3 * 4.
+  X = 14. % Multiplication has higher precedence than addition
+  
+  ?- Y is (2 + 3) * 4.
+  Y = 20. % Parentheses override precedence
+  ```
+
+##### **1.2.7. Logical Implications (`:-`)**
+
+- **Definition**: Represents a rule where the head is true if the body is true.
+- **Usage**: Defines relationships and dependencies between predicates.
+- **Example**:
+  ```prolog
+  % A person is happy if they have money and are healthy
+  happy(Person) :- has_money(Person), healthy(Person).
+  ```
+
+##### **1.2.8. Conditional Operators**
+
+Prolog supports various conditional constructs to handle different scenarios within rules.
+
+- **If-Then (`->`)**
+  - **Definition**: Represents a conditional; if the condition is true, then perform the action.
+  - **Usage**:
+    ```prolog
+    (Condition -> Then ; Else)
+    ```
+  - **Example**:
+    ```prolog
+    % Assign a status based on age
+    (age(Person, Age), Age >= 18 -> Status = adult ; Status = minor).
+    ```
+
+- **If-Then-Else (`-> ;`)**
+  - **Definition**: Combines the if-then and else clauses in a single expression.
+  - **Usage**:
+    ```prolog
+    (Condition -> Then ; Else)
+    ```
+  - **Example**:
+    ```prolog
+    % Determine if a number is even or odd
+    (0 is N mod 2 -> Status = even ; Status = odd).
+    ```
+
+##### **1.2.9. List Operators**
+
+Prolog provides specific operators for list manipulation, enhancing readability and efficiency.
+
+- **List Construction (`[Head|Tail]`)**
+  - **Definition**: Splits a list into its head and tail or constructs a new list by prepending an element.
+  - **Usage**:
+    ```prolog
+    % Splitting a list
+    [H|T] = [a, b, c].
+    % H = a
+    % T = [b, c]
+    
+    % Constructing a list
+    NewList = [a|[b, c, d]].
+    % NewList = [a, b, c, d]
+    ```
+
+- **Concatenation (`++`)** *(Note: `++` is not a standard Prolog operator, but some Prolog implementations may support it as syntactic sugar for `append/3`.)*
+
+- **Difference (`--`)** *(Similarly, not standard; used in some Prolog libraries for list difference operations.)*
+
+##### **1.2.10. Miscellaneous Operators**
+
+- **Comma (`,`)**: Logical AND
+  - **Usage**: Combines multiple goals that must all succeed.
+  - **Example**:
+    ```prolog
+    % A person is eligible if they are over 18 and have a valid ID
+    eligible(Person) :- over_18(Person), has_valid_id(Person).
+    ```
+
+- **Semicolon (`;`)**: Logical OR
+  - **Usage**: Offers alternative goals where at least one must succeed.
+  - **Example**:
+    ```prolog
+    % A person can be a student or a teacher
+    role(Person, student) :- student(Person).
+    role(Person, teacher) :- teacher(Person).
+    ```
+
+- **Negation as Failure (`\+`)**
+  - **Definition**: Succeeds if the enclosed goal fails.
+  - **Usage**:
+    ```prolog
+    % A person is not a student
+    not_student(Person) :- \+ student(Person).
+    ```
+
+##### **1.2.11. Defining Custom Operators**
+
+Prolog allows the definition of custom operators to improve code readability.
+
+- **Syntax**:
+  ```prolog
+  :- op(Precedence, Type, Operator).
+  ```
+  
+- **Parameters**:
+  - **Precedence**: An integer between 0 and 1200 determining the operator's priority.
+  - **Type**: Specifies the operator's associativity (`xfx`, `xfy`, `yfx`, `fx`, `fy`, `xf`).
+  - **Operator**: The symbol representing the operator.
+
+- **Example**:
+  ```prolog
+  % Define a new infix operator `**` for exponentiation
+  :- op(500, yfx, **).
+  
+  % Usage of the custom operator
+  ?- X is 2 ** 3.
+  X = 8.
+  ```
+
+- **Types of Operator Associativity**:
+  - **xfx**: Non-associative infix
+  - **xfy**: Right-associative infix
+  - **yfx**: Left-associative infix
+  - **fx**: Prefix
+  - **fy**: Prefix, allowing chaining
+  - **xf**: Postfix
+  - **yf**: Postfix, allowing chaining
+
+- **Example of Associativity**:
+  ```prolog
+  % Define a right-associative operator `=>`
+  :- op(400, xfy, =>).
+  
+  % Define a left-associative operator `<=`
+  :- op(400, yfx, <=).
+  
+  % Usage
+  ?- write((a => b => c)), nl.
+  (a => (b => c))
+  
+  ?- write((a <= b <= c)), nl.
+  ((a <= b) <= c)
+  ```
+
+
 
 ### 1.2. Lists
 
