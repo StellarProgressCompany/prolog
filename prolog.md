@@ -531,11 +531,11 @@ Prolog allows the definition of custom operators to improve code readability.
 
 
 
-### 1.2. Lists
+### 1.3. Lists
 
 Lists are fundamental data structures in Prolog, representing ordered collections of elements. They are versatile and widely used in various algorithms and data manipulations.
 
-#### **1.2.1. List Basics**
+#### **1.3.1. List Basics**
 
 - **Definition**: Ordered sequences of elements, which can be heterogeneous (different types).
 - **Syntax**: `[Element1, Element2, ..., ElementN]`
@@ -551,7 +551,7 @@ Lists are fundamental data structures in Prolog, representing ordered collection
   [g01, "task", 3, [sublist]].
   ```
 
-#### **1.2.2. Head and Tail**
+#### **1.3.2. Head and Tail**
 
 - **Definition**: The first element of a list is the head, and the remainder of the list is the tail.
 - **Syntax**: `[Head|Tail]`
@@ -563,7 +563,7 @@ Lists are fundamental data structures in Prolog, representing ordered collection
   % T = [b, c, d]
   ```
 
-#### **1.2.3. Common List Predicates**
+#### **1.3.3. Common List Predicates**
 
 1. **`member/2`**
    - **Purpose**: Checks if an element is part of a list.
@@ -670,7 +670,7 @@ Lists are fundamental data structures in Prolog, representing ordered collection
      X = [c, b, a].
      ```
 
-#### **1.2.4. Recursive List Processing**
+#### **1.3.4. Recursive List Processing**
 
 Many list operations in Prolog are defined recursively. Understanding recursion is key to manipulating lists effectively.
 
@@ -698,11 +698,11 @@ Many list operations in Prolog are defined recursively. Understanding recursion 
   Max = 4.
   ```
 
-### 1.3. Advanced Predicates
+### 1.4. Advanced Predicates
 
 Beyond the basics, Prolog offers a suite of advanced predicates that facilitate complex operations, especially when dealing with logic programming and constraint solving.
 
-#### **1.3.1. `findall/3`**
+#### **1.4.1. `findall/3`**
 
 - **Purpose**: Gathers all possible instances that satisfy a particular goal into a list.
 - **Syntax**: `findall(Template, Goal, List).`
@@ -717,7 +717,7 @@ Beyond the basics, Prolog offers a suite of advanced predicates that facilitate 
   Tasks = [killing, countingMoney, politics].
   ```
 
-#### **1.3.2. `expressOr/2` and `expressAnd/2`**
+#### **1.4.2. `expressOr/2` and `expressAnd/2`**
 
 - **Purpose**: Define logical relationships between variables and lists of literals, often used in SAT encoding.
   
@@ -752,7 +752,7 @@ Beyond the basics, Prolog offers a suite of advanced predicates that facilitate 
       ...
   ```
 
-#### **1.3.3. Cardinality Constraints (`atLeast/2`, `atMost/2`, `exactly/2`)**
+#### **1.4.3. Cardinality Constraints (`atLeast/2`, `atMost/2`, `exactly/2`)**
 
 - **Purpose**: Enforce constraints on the number of literals that can be true within a list.
   
@@ -795,7 +795,7 @@ Beyond the basics, Prolog offers a suite of advanced predicates that facilitate 
       atMost(K, Lits).
   ```
 
-#### **1.3.4. `writeOneClause/1`**
+#### **1.4.4. `writeOneClause/1`**
 
 - **Purpose**: Outputs a clause (a disjunction of literals) to a file or standard output, often used in SAT encoding.
 - **Syntax**: `writeOneClause([Literal1, Literal2, ..., LiteralN]).`
@@ -817,7 +817,7 @@ Beyond the basics, Prolog offers a suite of advanced predicates that facilitate 
   writeOneClause([]) :- write('0'), nl.
   ```
 
-#### **1.3.5. Higher-Order Predicates**
+#### **1.4.5. Higher-Order Predicates**
 
 - **`maplist/2` and `maplist/3`**
   - **Purpose**: Apply a predicate to each element (or corresponding elements) of a list.
@@ -853,7 +853,7 @@ Beyond the basics, Prolog offers a suite of advanced predicates that facilitate 
     Odds = [1, 3].
     ```
 
-#### **1.3.6. Defining Custom Predicates**
+#### **1.4.6. Defining Custom Predicates**
 
 Creating custom predicates allows you to encapsulate logic and reuse code efficiently.
 
@@ -875,7 +875,7 @@ Creating custom predicates allows you to encapsulate logic and reuse code effici
       does(G, T, H).
   ```
 
-#### **1.3.7. Recursion**
+#### **1.4.7. Recursion**
 
 Recursion allows Prolog to perform iterative computations by having predicates call themselves with modified arguments.
 
@@ -908,7 +908,7 @@ Recursion allows Prolog to perform iterative computations by having predicates c
   c
   ```
 
-#### **1.3.8. Error Handling and Guards**
+#### **1.4.8. Error Handling and Guards**
 
 Using guards and conditions to handle different cases and prevent errors.
 
