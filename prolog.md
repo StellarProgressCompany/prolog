@@ -611,7 +611,7 @@ Numbers = [1, 2, 3, 4, 5].
 
 ---
 
-### **Example 3: Collecting Squares of Numbers**
+### **Example 2: Collecting Squares of Numbers**
 
 **Goal:** Collect the squares of numbers from 1 to 5.
 
@@ -636,6 +636,50 @@ Numbers = [1, 2, 3, 4, 5].
 Squares = [1, 4, 9, 16, 25].
 ```
 
+---
+
+### **Example 3:Collecting Sat Literals**
+
+#### **Prolog Code:**
+
+```prolog
+relateDoesVarsWithBusyAtHourVars :- 
+    available(G,H), 
+    findall( does(G,T,H), task(T), Lits ), 
+    expressOr( busyAtHour(G,H), Lits ), 
+    fail.
+relateDoesVarsWithBusyAtHourVars.
+```
+
+ **`findall/3` Usage:**
+   - **Template:** `does(G, T, H)`
+     - For each available gangster `G` at hour `H`, we want to collect all possible `does(G, T, H)` predicates, where `T` represents a task.
+   - **Goal:** `task(T)`
+     - For each gangster `G` and hour `H`, iterate over all tasks `T` that can be assigned.
+   - **List:** `Lits`
+     - Collects all `does(G, T, H)` instances into the list `Lits`.
+
+**What `findall/3` Does Here:**
+
+For each available gangster `G` at hour `H`, `findall/3` gathers all possible task assignments (`does(G, T, H)`) into the list `Lits`. This list is then used to express that if any of these assignments occur, the gangster is busy at that hour.
+
+
+---
+
+### **Example 4: Collecting SAT literals 2**
+
+**`findall/3` Usage:**
+   - **Template:** `-busyAtHour(G, H)`
+     - For each hour `H` between `HIni` and `HFin`, collect the negation of `busyAtHour(G, H)`.
+   - **Goal:** `between(HIni, HFin, H)`
+     - Generates all hours `H` from `HIni` to `HFin` inclusive.
+   - **List:** `Clause`
+     - Collects all `-busyAtHour(G, H)` instances into the list `Clause`.
+
+
+**What `findall/3` Does Here:**
+
+For each gangster `G` and starting hour `HIni`, `findall/3` gathers all negated busy hour literals (`-busyAtHour(G, H)`) within the range `HIni` to `HFin`. This list `Clause` is then used to create a clause that enforces the constraint that gangster `G` cannot be busy for more than `K` consecutive hours.
 
 #### **1.4.2. `expressOr/2` and `expressAnd/2`**
 
