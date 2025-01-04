@@ -392,9 +392,3 @@ X = [0, 1, 1].
 - **Model Generation**: Leveraging CLP(FD) solvers to find satisfying assignments.
 
 ---
-
-**Good luck on your exam!**
-
-```
-
-
