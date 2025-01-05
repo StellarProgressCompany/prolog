@@ -1,4 +1,8 @@
-Sure, here's the revised version of the **Golomb Ruler Problem** and the **Sudoku Puzzle** with the definitions written in plain text and formatted for GitHub. I've removed the summary and comments, as well as the mathematical notations that can't be easily expressed in plain text.
+```markdown
+## **Index**
+
+1. [Golomb Ruler Problem](#golomb-ruler-problem)
+2. [Sudoku Puzzle](#sudoku-puzzle)
 
 ---
 
@@ -6,10 +10,10 @@ Sure, here's the revised version of the **Golomb Ruler Problem** and the **Sudok
 
 **Definition:**
 
-A **Golomb ruler** of order N and length M is a set of N distinct integers such that:
+A Golomb ruler of order N and length M is a set of N distinct integers such that:
 
-1. The integers are strictly increasing: \( t1 < t2 < ... < tN \)
-2. The length of the ruler is defined as \( M = tN - t1 \)
+1. The integers are strictly increasing: t1 < t2 < ... < tN
+2. The length of the ruler is defined as M = tN - t1
 3. The differences between any two distinct integers in the set must be distinct.
 
 In simpler terms, a Golomb ruler is a set of numbers placed on a line such that the distances between every pair of numbers are unique.
@@ -69,13 +73,19 @@ example_golomb :-
 ?- example_golomb.
 ```
 
+#### **Example Output:**
+```prolog
+?- example_golomb.
+[0, 1, 4, 6]
+```
+
 ---
 
 ### **2. Sudoku Puzzle**
 
 **Definition:**
 
-A **Sudoku puzzle** consists of a 9x9 grid, which is partially filled with numbers from 1 to 9. The objective is to fill in the remaining cells so that each row, each column, and each of the nine 3x3 subgrids contain all the digits from 1 to 9, without repetition.
+A Sudoku puzzle consists of a 9x9 grid, which is partially filled with numbers from 1 to 9. The objective is to fill in the remaining cells so that each row, each column, and each of the nine 3x3 subgrids contain all the digits from 1 to 9, without repetition.
 
 For example, the initial Sudoku puzzle might look like this:
 
@@ -139,6 +149,16 @@ example_sudoku :-
 ?- example_sudoku.
 ```
 
----
-
-Let me know if you need further adjustments or additional problems!
+#### **Example Output:**
+```prolog
+?- example_sudoku.
+[[5, 3, 4, 6, 7, 8, 9, 1, 2], 
+ [6, 7, 2, 1, 9, 5, 3, 4, 8],
+ [1, 9, 8, 3, 4, 2, 5, 6, 7],
+ [8, 5, 9, 7, 6, 1, 4, 2, 3],
+ [4, 2, 6, 8, 5, 3, 7, 9, 1],
+ [7, 1, 3, 9, 2, 4, 8, 5, 6],
+ [9, 6, 1, 5, 3, 7, 2, 8, 4],
+ [2, 8, 7, 4, 1, 9, 6, 3, 5],
+ [3, 4, 5, 2, 8, 6, 1, 7, 9]]
+```
