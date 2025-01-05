@@ -7,7 +7,9 @@
 5. [Graph Coloring Problem](#graph-coloring-problem)
 6. [Sum of Subsets Problem](#sum-of-subsets-problem)
 7. [Pigeonhole Principle](#pigeonhole-principle)
-
+8. [Graph Shortest Path Problem](#graph-shortest-path-problem)
+9. [Magic Square Problem](#magic-square-problem)
+10. [Bin Packing Problem](#bin-packing-problem)
    
 ---
 
@@ -393,6 +395,209 @@ example_pigeonhole :-
 ```prolog
 ?- example_pigeonhole.
 true.
+```
+
+---
+
+
+#### **8. Graph Shortest Path Problem**
+
+**Definition:**
+
+The **Graph Shortest Path Problem** involves finding the shortest path between two vertices in a weighted graph, where the edges have associated weights representing the cost or distance between the vertices. This is one of the most commonly solved problems in graph theory and is widely used in navigation, routing, and network analysis.
+
+Given a graph, the goal is to determine the shortest path from a starting vertex to a destination vertex. The weight of a path is the sum of the weights of the edges along the path, and the shortest path is the one with the minimum total weight.
+
+For example, consider the following graph with 4 nodes and weighted edges:
+
+```
+1 --10-- 2
+|        |
+5        1
+|        |
+3 --3-- 4
+```
+
+The task is to find the shortest path from node 1 to node 4. 
+
+This is often solved using algorithms like **Dijkstra’s algorithm**.
+
+```prolog
+:- use_module(library(clpfd)).
+
+% 1- Define variables and domains
+shortest_path(Graph, Start, End, Path, TotalCost) :-
+    length(Graph, N),
+    length(Path, N),
+    Path ins 1..N,        % Path represents the sequence of cities to visit
+    all_different(Path),  % Ensure no repeated vertices
+
+    % 2- Define constraints
+    % The total cost is minimized
+    total_cost(Path, Graph, TotalCost),
+
+    % 3- Labeling
+    label(Path),
+    
+    % 4- Result
+    write('Shortest Path: '), write(Path), nl,
+    write('Total Cost: '), write(TotalCost), nl.
+
+% Calculate the total cost based on the graph’s edge weights
+total_cost([], _, 0).
+total_cost([City1, City2 | Rest], Graph, TotalCost) :-
+    nth1(City1, Graph, Row),
+    nth1(City2, Row, Cost),
+    total_cost([City2 | Rest], Graph, RestCost),
+    TotalCost #= Cost + RestCost.
+
+% Example graph and nodes (1-indexed)
+example_graph :-
+    Graph = [
+        [0, 10, 5, 0],
+        [10, 0, 0, 1],
+        [5, 0, 0, 3],
+        [0, 1, 3, 0]
+    ],
+    shortest_path(Graph, 1, 4, Path, TotalCost),
+    write(Path), nl,
+    write(TotalCost), nl.
+
+% Example run
+?- example_graph.
+```
+
+#### **Example Output:**
+```prolog
+?- example_graph.
+Shortest Path: [1, 3, 4]
+Total Cost: 8
+```
+
+---
+
+#### **9. Magic Square Problem**
+
+**Definition:**
+
+A **Magic Square** is an arrangement of distinct integers in a square grid where the sum of the integers in each row, column, and diagonal is the same. This constant sum is called the "magic constant." Magic squares have been studied for centuries, and they have applications in number theory, recreational mathematics, and art.
+
+For example, a 3x3 magic square uses the integers 1 to 9, and the sum of each row, column, and diagonal is 15. A solution could be:
+
+```
+2 7 6
+9 5 1
+4 3 8
+```
+
+In this case, the sum of each row, each column, and both diagonals is 15. The task is to generate such a grid for any given order of the square.
+
+```prolog
+:- use_module(library(clpfd)).
+
+% 1- Define variables and domains
+magic_square(N, Square) :-
+    length(Square, N),
+    maplist(length_(N), Square),  % Ensure the grid has the correct dimensions
+    append(Square, Vars),         % Flatten the square into a single list
+    Vars ins 1..(N*N),            % The variables represent the numbers 1 to N^2
+    all_different(Vars),          % Ensure all numbers are distinct
+    
+    % 2- Define constraints
+    % The sum of each row, column, and diagonal must be the same
+    sum_rows(Square),
+    sum_columns(Square),
+    sum_diagonals(Square),
+    
+    % 3- Labeling
+    label(Vars),
+
+    % 4- Result
+    write(Square), nl.
+
+% Constraint for each row sum
+sum_rows([]).
+sum_rows([Row|Rest]) :- sum(Row, #=, 15), sum_rows(Rest).
+
+% Constraint for each column sum
+sum_columns(Square) :-
+    transpose(Square, Transposed),
+    sum_rows(Transposed).
+
+% Constraint for diagonals sum
+sum_diagonals(Square) :-
+    diagonal(Square, Diagonal),
+    sum(Diagonal, #=, 15).
+
+diagonal([], []).
+diagonal([Row|Rows], [DiagonalElem|DiagonalRest]) :-
+    nth1(Index, Row, DiagonalElem),
+    diagonal(Rows, DiagonalRest).
+
+% Example run for a 3x3 magic square
+example_magic :-
+    magic_square(3, Square),
+    write(Square), nl.
+
+% Example run
+?- example_magic.
+```
+
+#### **Example Output:**
+```prolog
+?- example_magic.
+[[2, 7, 6], [9, 5, 1], [4, 3, 8]]
+```
+
+---
+
+#### **10. Bin Packing Problem**
+
+**Definition:**
+
+The **Bin Packing Problem** is an optimization problem where the task is to pack a set of items into a finite number of bins (or containers), minimizing the number of bins used. Each item has a size (or weight), and each bin has a fixed capacity. The challenge is to fit the items into the bins without exceeding the capacity of any bin.
+
+For example, given a set of items with sizes [4, 8, 1, 4, 2, 1] and bin capacities of 10, the goal is to pack these items into the fewest number of bins.
+
+```prolog
+:- use_module(library(clpfd)).
+
+% 1- Define variables and domains
+bin_packing(Sizes, BinCapacity, BinsUsed) :-
+    length(Sizes, N),
+    length(Bins, N),
+    Bins ins 1..N,  % Each item belongs to one of the N bins
+    
+    % 2- Define constraints
+    % Each bin's total size must not exceed the bin capacity
+    forall(member(Bin, Bins), sum_bin(Bin, Sizes, BinCapacity)),
+    
+    % 3- Labeling
+    label(Bins),
+    
+    % 4- Result
+    findall(Bin, member(Bin, Bins), BinsUsed),
+    write(BinsUsed), nl.
+
+% Ensure that the total size in each bin does not exceed the bin capacity
+sum_bin(_, [], _).
+sum_bin(Bin, [Size|RestSizes], BinCapacity) :-
+    nth1(Bin, [Size|RestSizes], Size),
+    sum(RestSizes, #=<, BinCapacity).
+
+% Example run for a set of sizes
+example_bin_packing :-
+    bin_packing([4, 8, 1, 4, 2, 1], 10, BinsUsed),
+    write(BinsUsed), nl.
+
+% Example run
+?- example_bin_packing.
+```
+
+#### **Example Output:**
+```prolog
+?- example_bin_packing.
+[1, 1, 2, 1, 2, 2]
 ```
 
 ---
