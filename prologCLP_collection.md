@@ -4,7 +4,11 @@
 2. [Sudoku Puzzle](#sudoku-puzzle)
 3. [Traveling Salesman Problem (TSP)](#traveling-salesman-problem-tsp)
 4. [Knapsack Problem](#knapsack-problem)
+5. [Graph Coloring Problem](#graph-coloring-problem)
+6. [Sum of Subsets Problem](#sum-of-subsets-problem)
+7. [Pigeonhole Principle](#pigeonhole-principle)
 
+   
 ---
 
 ### **1. Golomb Ruler Problem**
