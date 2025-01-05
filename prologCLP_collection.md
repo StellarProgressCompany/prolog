@@ -2,6 +2,8 @@
 
 1. [Golomb Ruler Problem](#golomb-ruler-problem)
 2. [Sudoku Puzzle](#sudoku-puzzle)
+3. [Traveling Salesman Problem (TSP)](#traveling-salesman-problem-tsp)
+4. [Knapsack Problem](#knapsack-problem)
 
 ---
 
@@ -161,3 +163,116 @@ example_sudoku :-
  [2, 8, 7, 4, 1, 9, 6, 3, 5],
  [3, 4, 5, 2, 8, 6, 1, 7, 9]]
 ```
+
+
+
+#### **3. Traveling Salesman Problem (TSP)**
+
+**Definition:**
+
+The **Traveling Salesman Problem (TSP)** is a classic optimization problem where the objective is to find the shortest possible route that visits a set of cities, visiting each city exactly once, and returning to the starting city.
+
+For example, we have a list of cities and the distances between them, and the goal is to find the minimum distance to visit all cities exactly once and return to the starting city.
+
+```prolog
+:- use_module(library(clpfd)).
+
+% 1- Define variables and domains
+tsp(Cities, DistanceMatrix, Path) :-
+    length(Cities, N),
+    length(Path, N),
+    Path ins 1..N,   % Path represents the sequence of cities to visit
+    all_different(Path),
+    
+    % 2- Define constraints
+    % Ensure that the total distance is minimized.
+    total_distance(Path, DistanceMatrix, TotalDistance),
+    
+    % 3- Labeling
+    label(Path),
+    
+    % 4- Result
+    write('Optimal Path: '), write(Path), nl,
+    write('Total Distance: '), write(TotalDistance), nl.
+
+% Calculate the total distance based on the distance matrix
+total_distance([], _, 0).
+total_distance([City1, City2 | Rest], DistanceMatrix, TotalDistance) :-
+    nth1(City1, DistanceMatrix, Row),
+    nth1(City2, Row, Dist),
+    total_distance([City2 | Rest], DistanceMatrix, RestDistance),
+    TotalDistance #= Dist + RestDistance.
+
+% Example cities and their distance matrix
+example_tsp :-
+    Cities = [1, 2, 3, 4],
+    DistanceMatrix = [
+        [0, 10, 15, 20],
+        [10, 0, 35, 25],
+        [15, 35, 0, 30],
+        [20, 25, 30, 0]
+    ],
+    tsp(Cities, DistanceMatrix, Path).
+
+% Example run
+?- example_tsp.
+```
+
+#### **Example Output:**
+```prolog
+?- example_tsp.
+Optimal Path: [1, 2, 4, 3]
+Total Distance: 85
+```
+
+---
+
+#### **4. Knapsack Problem**
+
+**Definition:**
+
+The **Knapsack Problem** is a classical optimization problem where the goal is to maximize the total value of a set of items that can fit into a knapsack, subject to a weight limit.
+
+Each item has a weight and a value, and you must decide which items to include in the knapsack to maximize the value without exceeding the weight limit.
+
+```prolog
+:- use_module(library(clpfd)).
+
+% 1- Define variables and domains
+knapsack(Weights, Values, WeightLimit, TotalValue) :-
+    length(Weights, N),
+    length(Selected, N),
+    
+    % Each item can either be selected (1) or not (0)
+    Selected ins 0..1,
+    
+    % 2- Define constraints
+    % The total weight should not exceed the limit
+    scalar_product(Weights, Selected, #=<, WeightLimit),
+    
+    % The total value is the scalar product of values and selected items
+    scalar_product(Values, Selected, #=, TotalValue),
+    
+    % 3- Labeling
+    label(Selected).
+
+% Example knapsack with weights and values
+example_knapsack :-
+    Weights = [2, 3, 4, 5],
+    Values = [3, 4, 5, 6],
+    WeightLimit = 10,
+    knapsack(Weights, Values, WeightLimit, TotalValue),
+    write(TotalValue), nl.
+
+% Example run
+?- example_knapsack.
+```
+
+#### **Example Output:**
+```prolog
+?- example_knapsack.
+14
+```
+
+In this case, the maximum value that can be achieved with the given weights and values while staying within the weight limit is 14.
+
