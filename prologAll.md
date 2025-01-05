@@ -439,6 +439,7 @@ Lists are fundamental data structures in Prolog, representing ordered collection
      ?- member(d, [a, b, c]).
      false.
      ```
+
    - **Usage in Definitions**:
      ```prolog
      % Define blocked hours
@@ -532,6 +533,66 @@ Lists are fundamental data structures in Prolog, representing ordered collection
      ?- reverse([a, b, c], X).
      X = [c, b, a].
      ```
+
+9. **`last/2`**
+   - **Purpose**: Retrieves the last element of a list.
+   - **Syntax**: `last(List, Element).`
+   - **Example**:
+     ```prolog
+     ?- last([a, b, c], X).
+     X = c.
+     
+     ?- last([1, 2, 3], X).
+     X = 3.
+     ```
+
+10. **`memberchk/2`**
+    - **Purpose**: Checks if an element is part of a list and cuts the search once it finds the first match (non-backtracking).
+    - **Syntax**: `memberchk(Element, List).`
+    - **Example**:
+      ```prolog
+      ?- memberchk(b, [a, b, c]).
+      true.
+      
+      ?- memberchk(d, [a, b, c]).
+      false.
+      ```
+
+11. **`delete/3`**
+    - **Purpose**: Removes all occurrences of an element from a list.
+    - **Syntax**: `delete(List, Element, Result).`
+    - **Example**:
+      ```prolog
+      ?- delete([a, b, c, b], b, X).
+      X = [a, c].
+      
+      ?- delete([1, 2, 2, 3], 2, X).
+      X = [1, 3].
+      ```
+
+12. **`union/3`**
+    - **Purpose**: Computes the union of two lists, removing duplicates.
+    - **Syntax**: `union(List1, List2, Union).`
+    - **Example**:
+      ```prolog
+      ?- union([a, b, c], [b, c, d], X).
+      X = [a, b, c, d].
+      
+      ?- union([1, 2, 3], [3, 4, 5], X).
+      X = [1, 2, 3, 4, 5].
+      ```
+
+13. **`intersection/3`**
+    - **Purpose**: Computes the intersection of two lists, retaining only common elements.
+    - **Syntax**: `intersection(List1, List2, Intersection).`
+    - **Example**:
+      ```prolog
+      ?- intersection([a, b, c], [b, c, d], X).
+      X = [b, c].
+      
+      ?- intersection([1, 2, 3], [3, 4, 5], X).
+      X = [3].
+      ```
 
 #### **1.3.4. Recursive List Processing**
 
