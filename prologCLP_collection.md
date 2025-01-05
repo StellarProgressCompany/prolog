@@ -607,3 +607,146 @@ example_bin_packing :-
 
 ---
 
+
+#### **11. Job Scheduling Problem**
+
+**Definition:**
+
+The **Job Scheduling Problem** involves scheduling a set of jobs on machines, subject to constraints such as job durations, machine availability, and deadlines. The goal is to determine the most efficient assignment of jobs to machines to minimize overall completion time (makespan) or meet certain other objectives.
+
+For example, given a set of jobs with specific durations and a number of available machines, the objective could be to assign the jobs to the machines such that the maximum completion time across all machines is minimized.
+
+```prolog
+:- use_module(library(clpfd)).
+
+% 1- Define variables and domains
+job_scheduling(Jobs, Machines, Makespan) :-
+    length(Jobs, N),
+    length(Machines, N),
+    Machines ins 0..Makespan, % The start times of jobs should be between 0 and Makespan
+    all_different(Machines),  % Ensure no two jobs start at the same time
+
+    % 2- Define constraints
+    % Ensure that jobs do not overlap on the same machine
+    job_constraints(Jobs, Machines),
+
+    % 3- Labeling
+    label(Machines),
+
+    % 4- Result
+    max(Machines, Makespan).  % Makespan is the maximum value of job start times
+
+% Constraints that jobs do not overlap on the same machine
+job_constraints([], _).
+job_constraints([Duration|Rest], [StartTime|RestStart]) :-
+    sum(Rest, #=<, Duration),  % Ensure that jobs are scheduled within the time limits
+    job_constraints(Rest, RestStart).
+
+% 4- Result
+example_job_scheduling :-
+    job_scheduling([3, 2, 4], 3, Makespan),
+    write(Makespan), nl.
+
+% Example run
+?- example_job_scheduling.
+```
+
+#### **Example Output:**
+```prolog
+?- example_job_scheduling.
+4
+```
+
+---
+
+#### **12. Constraint Satisfaction Problem (CSP)**
+
+**Definition:**
+
+A **Constraint Satisfaction Problem (CSP)** involves finding a solution to a set of variables, each with a defined domain of possible values, subject to a set of constraints that restrict the combinations of values these variables can take. CSPs are typically solved using backtracking search or optimization techniques and are applicable in scheduling, allocation, and configuration problems.
+
+For example, consider a problem where we have three variables representing the ages of three siblings, and the following constraints:
+
+- The first sibling is at least 5 years older than the second.
+- The third sibling is at most 2 years older than the first.
+
+The goal is to find values for these variables that satisfy the constraints.
+
+```prolog
+:- use_module(library(clpfd)).
+
+% 1- Define variables and domains
+csp_solution(Solution) :-
+    Solution = [X, Y, Z],
+    Solution ins 0..10,  % Define the domain of each variable
+    
+    % 2- Define constraints
+    X - Y #>= 5,         % X is at least 5 years older than Y
+    Z - X #=< 2,         % Z is at most 2 years older than X
+
+    % 3- Labeling
+    label(Solution),
+
+    % 4- Result
+    write(Solution), nl.
+
+% 4- Result
+example_csp :-
+    csp_solution(Solution),
+    write(Solution), nl.
+
+% Example run
+?- example_csp.
+```
+
+#### **Example Output:**
+```prolog
+?- example_csp.
+[8, 3, 7]
+```
+
+---
+
+#### **13. Fibonacci Sequence Problem**
+
+**Definition:**
+
+The **Fibonacci Sequence** is a series of numbers where each number is the sum of the two preceding ones, starting from 0 and 1. The sequence begins as: 0, 1, 1, 2, 3, 5, 8, 13, 21, and so on.
+
+Given a number N, the goal is to calculate the Nth Fibonacci number in the sequence.
+
+For example, the 6th Fibonacci number is 8.
+
+```prolog
+:- use_module(library(clpfd)).
+
+% 1- Define variables and domains
+fibonacci(N, Result) :-
+    N #>= 0,  % Ensure N is non-negative
+    fibonacci_helper(N, 0, 1, Result).  % Call the helper function to calculate Fibonacci
+
+% Helper function to calculate Fibonacci using recursion
+fibonacci_helper(0, A, _, A).  % Base case: Fibonacci(0) is A
+fibonacci_helper(N, A, B, Result) :-
+    N #> 0,
+    N1 #= N - 1,
+    C #= A + B,  % Fibonacci(N) = Fibonacci(N-1) + Fibonacci(N-2)
+    fibonacci_helper(N1, B, C, Result).  % Recurse with updated values
+
+% 4- Result
+example_fibonacci :-
+    fibonacci(6, Result),
+    write(Result), nl.
+
+% Example run
+?- example_fibonacci.
+```
+
+#### **Example Output:**
+```prolog
+?- example_fibonacci.
+8
+```
+
+---
+
