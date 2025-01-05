@@ -1,9 +1,3 @@
-
-
-Here is a more detailed and extensive Prolog CLP cheat sheet following your preferences, focusing on the `ins` predicate and organized into subsections for each step:
-
----
-
 ## Prolog CLP Cheat Sheet (using `ins`)
 
 ### 1. **Define Variables and Domains**
