@@ -220,6 +220,157 @@ This constraint ensures that a list of variables is evenly distributed across a 
       List ins 1..N.
   ```
 
+##### 2.6.10 **Distance Between Different Pairs (diff/2)**
+This constraint ensures that the distance between the values assigned to pairs of indices in a list of variables is different for each pair.
+
+##### Example:
+- Given a list `LP` of pairs of indices `[[I, J], [K, L]]`, and a list `LV` of variables, ensure the difference between the values assigned to the `I`-th and `J`-th variables is different from the difference between the values assigned to the `K`-th and `L`-th variables.
+  
+  ```prolog
+  diff([], _).
+  diff([[[I, J], [K, L]] | R], V) :-
+      nth1(I, V, VI),
+      nth1(J, V, VJ),
+      nth1(K, V, VK),
+      nth1(L, V, VL),
+      VJ - VI #\= VL - VK,
+      diff(R, V).
+  ```
+
+##### 2.6.11 **Distinct Elements in List (distinct_elements/1)**
+This constraint ensures that all elements in a list are distinct, and it applies recursively.
+
+##### Example:
+- Ensure all elements in a list are distinct by comparing each element to all others.
+  
+  ```prolog
+  distinct_elements([]).
+  distinct_elements([X | Rest]) :- 
+      \+ member(X, Rest),
+      distinct_elements(Rest).
+  ```
+
+##### 2.6.12 **Sum of Differences (sum_diff/2)**
+This constraint ensures that the sum of the absolute differences between consecutive elements in a list is equal to a given value.
+
+##### Example:
+- The sum of the absolute differences between consecutive elements in the list must equal `Sum`.
+  
+  ```prolog
+  sum_diff([X], 0).
+  sum_diff([X, Y | Rest], Sum) :-
+      sum_diff([Y | Rest], RestSum),
+      Diff #= abs(X - Y),
+      Sum #= Diff + RestSum.
+  ```
+
+##### 2.6.13 **Count Occurrences (count_occurrences/3)**
+This constraint counts how many times a specific value appears in a list.
+
+##### Example:
+- Count how many times `X` appears in list `L` and ensure it matches the required count `Count`.
+  
+  ```prolog
+  count_occurrences([], _, 0).
+  count_occurrences([X | Rest], X, Count) :-
+      count_occurrences(Rest, X, RestCount),
+      Count #= RestCount + 1.
+  count_occurrences([Y | Rest], X, Count) :-
+      Y \= X,
+      count_occurrences(Rest, X, Count).
+  ```
+
+##### 2.6.14 **Length of Sublist (sublist_length/2)**
+This constraint ensures that a sublist of a list has a specific length.
+
+##### Example:
+- The sublist of `List` from index `I` to index `J` must have length `Length`.
+  
+  ```prolog
+  sublist_length(List, Length) :- 
+      length(List, Length).
+  ```
+
+##### 2.6.15 **Pairs with Sum Constraint (pair_sum/3)**
+This constraint ensures that the sum of pairs of elements from a list satisfies a condition.
+
+##### Example:
+- For each pair of adjacent elements in the list, ensure the sum is less than or equal to a value `Max`.
+  
+  ```prolog
+  pair_sum([], _).
+  pair_sum([X, Y | Rest], Max) :-
+      X + Y #=< Max,
+      pair_sum(Rest, Max).
+  ```
+
+##### 2.6.16 **Sorted Sublist Constraint (sorted_sublist/1)**
+This constraint ensures that a sublist is sorted in increasing order.
+
+##### Example:
+- Ensure the sublist of `List` starting from index `I` to index `J` is sorted in increasing order.
+  
+  ```prolog
+  sorted_sublist([]).
+  sorted_sublist([_]).
+  sorted_sublist([X, Y | Rest]) :-
+      X #< Y,
+      sorted_sublist([Y | Rest]).
+  ```
+
+##### 2.6.17 **Consecutive Positive Elements Constraint (consecutive_positive/1)**
+This constraint ensures that all consecutive elements in a list are positive integers.
+
+##### Example:
+- Ensure that for each pair of consecutive elements, both must be positive integers.
+  
+  ```prolog
+  consecutive_positive([]).
+  consecutive_positive([X, Y | Rest]) :-
+      X #> 0,
+      Y #> 0,
+      consecutive_positive([Y | Rest]).
+  ```
+
+##### 2.6.18 **Balanced Partition (balanced_partition/2)**
+This constraint ensures that a list can be partitioned into two subsets with approximately equal sums.
+
+##### Example:
+- The sum of elements in each subset must be close to half of the total sum.
+  
+  ```prolog
+  balanced_partition(List, Partition) :-
+      sum_list(List, Total),
+      Half #= Total // 2,
+      partition(Half, List, Partition).
+  ```
+
+##### 2.6.19 **Subset Sum Constraint (subset_sum/2)**
+This constraint ensures that the sum of a subset of a list of numbers equals a target sum.
+
+##### Example:
+- Ensure that the sum of any subset of `List` equals `Target`.
+  
+  ```prolog
+  subset_sum([], 0).
+  subset_sum([X | Rest], Target) :-
+      subset_sum(Rest, RestSum),
+      Target #= RestSum + X.
+  ```
+
+##### 2.6.20 **Unique Pair Sums (unique_pair_sums/1)**
+This constraint ensures that the sums of all pairs of elements in a list are distinct.
+
+##### Example:
+- For each pair of elements `(X, Y)`, ensure the sum `X + Y` is unique across all pairs.
+  
+  ```prolog
+  unique_pair_sums([]).
+  unique_pair_sums([X | Rest]) :-
+      unique_pair_sums(Rest),
+      \+ (member(Y, Rest), X + Y #= X + Y).
+  ```
+
 ---
 
 
