@@ -533,6 +533,44 @@ Lists are fundamental data structures in Prolog, representing ordered collection
      X = [c, b, a].
      ```
 
+9. **`flatten/2`**
+   - **Purpose**: Flattens a nested list structure into a single-level list.
+   - **Syntax**: `flatten(NestedList, FlatList).`
+   - **Example**:
+     ```prolog
+     ?- flatten([a, [b, [c, d], e], f], X).
+     X = [a, b, c, d, e, f].
+     
+     ?- flatten(X, [1, [2, [3, 4]], 5], Flat).
+     X = [1, 2, 3, 4, 5],
+     Flat = [1, 2, 3, 4, 5].
+     ```
+
+10. **`exclude/3`**
+    - **Purpose**: Removes all elements from a list that satisfy a given predicate.
+    - **Syntax**: `exclude(Predicate, List, Result).`
+    - **Example**:
+      ```prolog
+      % Define a predicate for even numbers
+      is_even(X) :- 0 is X mod 2.
+      
+      ?- exclude(is_even, [1, 2, 3, 4, 5], L).
+      L = [1, 3, 5].
+      ```
+
+11. **`partition/4`**
+    - **Purpose**: Splits a list into two lists based on a predicate: one list for elements that satisfy the predicate and another for those that do not.
+    - **Syntax**: `partition(Predicate, List, Yes, No).`
+    - **Example**:
+      ```prolog
+      % Define a predicate for positive numbers
+      is_positive(X) :- X > 0.
+      
+      ?- partition(is_positive, [-1, 2, -3, 4, 0], Pos, Neg).
+      Pos = [2, 4],
+      Neg = [-1, -3, 0].
+      ```
+
 #### **1.3.4. Recursive List Processing**
 
 Many list operations in Prolog are defined recursively. Understanding recursion is key to manipulating lists effectively.
@@ -560,6 +598,226 @@ Many list operations in Prolog are defined recursively. Understanding recursion 
   ?- max_list([3, 1, 4, 2], Max).
   Max = 4.
   ```
+
+#### **1.3.5. Additional List Predicates**
+
+12. **`sort/2`**
+    - **Purpose**: Sorts a list in ascending order, removing duplicate elements.
+    - **Syntax**: `sort(UnsortedList, SortedList).`
+    - **Example**:
+      ```prolog
+      ?- sort([3, 1, 2, 3, 4, 2], X).
+      X = [1, 2, 3, 4].
+      ```
+
+13. **`msort/2`**
+    - **Purpose**: Sorts a list in ascending order, preserving duplicate elements.
+    - **Syntax**: `msort(UnsortedList, SortedList).`
+    - **Example**:
+      ```prolog
+      ?- msort([3, 1, 2, 3, 4, 2], X).
+      X = [1, 2, 2, 3, 3, 4].
+      ```
+
+14. **`unique/2`**
+    - **Purpose**: Removes duplicate elements from a list while preserving the original order.
+    - **Syntax**: `unique(List, UniqueList).`
+    - **Example**:
+      ```prolog
+      unique([], []).
+      unique([H|T], [H|UniqueT]) :-
+          \+ member(H, T),
+          unique(T, UniqueT).
+      unique([H|T], UniqueT) :-
+          member(H, T),
+          unique(T, UniqueT).
+      
+      % Usage:
+      ?- unique([1, 2, 3, 2, 4, 1], X).
+      X = [1, 2, 3, 4].
+      ```
+
+15. **`intersect/3`**
+    - **Purpose**: Finds the intersection of two lists.
+    - **Syntax**: `intersect(List1, List2, Intersection).`
+    - **Example**:
+      ```prolog
+      intersect([], _, []).
+      intersect([H|T], List2, [H|Intersection]) :-
+          member(H, List2),
+          intersect(T, List2, Intersection).
+      intersect([H|T], List2, Intersection) :-
+          \+ member(H, List2),
+          intersect(T, List2, Intersection).
+      
+      % Usage:
+      ?- intersect([1, 2, 3, 4], [3, 4, 5, 6], X).
+      X = [3, 4].
+      ```
+
+#### **1.3.6. Typical Examples**
+
+Prolog is well-suited for defining mathematical and algorithmic concepts using lists. Below are five typical examples:
+
+1. **Factorial**
+
+   - **Definition**: Calculates the factorial of a non-negative integer.
+   - **Implementation**:
+     ```prolog
+     factorial(0, 1).
+     factorial(N, F) :-
+         N > 0,
+         N1 is N - 1,
+         factorial(N1, F1),
+         F is N * F1.
+     
+     % Usage:
+     ?- factorial(5, F).
+     F = 120.
+     ```
+
+2. **Fibonacci**
+
+   - **Definition**: Computes the N-th Fibonacci number.
+   - **Implementation**:
+     ```prolog
+     fibonacci(0, 0).
+     fibonacci(1, 1).
+     fibonacci(N, F) :-
+         N > 1,
+         N1 is N - 1,
+         N2 is N - 2,
+         fibonacci(N1, F1),
+         fibonacci(N2, F2),
+         F is F1 + F2.
+     
+     % Usage:
+     ?- fibonacci(6, F).
+     F = 8.
+     ```
+
+3. **Reverse a List**
+
+   - **Definition**: Reverses the elements of a list.
+   - **Implementation**:
+     ```prolog
+     reverse_list([], []).
+     reverse_list([H|T], Rev) :-
+         reverse_list(T, RevT),
+         append(RevT, [H], Rev).
+     
+     % Usage:
+     ?- reverse_list([a, b, c], X).
+     X = [c, b, a].
+     ```
+
+4. **Palindrome Check**
+
+   - **Definition**: Determines whether a list is a palindrome.
+   - **Implementation**:
+     ```prolog
+     is_palindrome(List) :-
+         reverse(List, List).
+     
+     % Usage:
+     ?- is_palindrome([r, a, c, e, c, a, r]).
+     true.
+     
+     ?- is_palindrome([h, e, l, l, o]).
+     false.
+     ```
+
+5. **Merge Sort**
+
+   - **Definition**: Sorts a list using the merge sort algorithm.
+   - **Implementation**:
+     ```prolog
+     merge_sort([], []).
+     merge_sort([X], [X]).
+     merge_sort(List, Sorted) :-
+         List \= [],
+         List \= [_],
+         split(List, L1, L2),
+         merge_sort(L1, Sorted1),
+         merge_sort(L2, Sorted2),
+         merge(Sorted1, Sorted2, Sorted).
+     
+     split([], [], []).
+     split([X], [X], []).
+     split([X,Y|T], [X|L1], [Y|L2]) :-
+         split(T, L1, L2).
+     
+     merge([], L, L).
+     merge(L, [], L).
+     merge([H1|T1], [H2|T2], [H1|T]) :-
+         H1 =< H2,
+         merge(T1, [H2|T2], T).
+     merge([H1|T1], [H2|T2], [H2|T]) :-
+         H1 > H2,
+         merge([H1|T1], T2, T).
+     
+     % Usage:
+     ?- merge_sort([3, 1, 4, 1, 5, 9, 2, 6], Sorted).
+     Sorted = [1, 1, 2, 3, 4, 5, 6, 9].
+     ```
+
+6. **Map Function**
+
+   - **Definition**: Applies a given function to each element of a list.
+   - **Implementation**:
+     ```prolog
+     map([], [], _F).
+     map([H|T], [H1|T1], F) :-
+         call(F, H, H1),
+         map(T, T1, F).
+     
+     % Example Predicate:
+     square(X, Y) :- Y is X * X.
+     
+     % Usage:
+     ?- map([1, 2, 3, 4], Squares, square).
+     Squares = [1, 4, 9, 16].
+     ```
+
+7. **Filter Function**
+
+   - **Definition**: Filters elements of a list based on a given predicate.
+   - **Implementation**:
+     ```prolog
+     filter([], [], _Pred).
+     filter([H|T], [H|Filtered], Pred) :-
+         call(Pred, H),
+         filter(T, Filtered, Pred).
+     filter([_|T], Filtered, Pred) :-
+         filter(T, Filtered, Pred).
+     
+     % Example Predicate:
+     is_even(X) :- 0 is X mod 2.
+     
+     % Usage:
+     ?- filter([1, 2, 3, 4, 5, 6], Evens, is_even).
+     Evens = [2, 4, 6].
+     ```
+
+8. **Flatten a Nested List**
+
+   - **Definition**: Flattens a nested list structure into a single-level list.
+   - **Implementation**:
+     ```prolog
+     flatten_list([], []).
+     flatten_list([H|T], FlatList) :-
+         flatten_list(H, FlatHead),
+         flatten_list(T, FlatTail),
+         append(FlatHead, FlatTail, FlatList).
+     flatten_list(L, [L]) :-
+         \+ is_list(L).
+     
+     % Usage:
+     ?- flatten_list([a, [b, [c, d], e], f], X).
+     X = [a, b, c, d, e, f].
+     ```
+
+These predicates and examples provide a solid foundation for working with lists in Prolog, enabling the implementation of complex data manipulations and algorithms.
 
 ### 1.4. Advanced Predicates
 
