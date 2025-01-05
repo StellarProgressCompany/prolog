@@ -10,7 +10,12 @@
 8. [Graph Shortest Path Problem](#graph-shortest-path-problem)
 9. [Magic Square Problem](#magic-square-problem)
 10. [Bin Packing Problem](#bin-packing-problem)
-   
+11. [Job Scheduling Problem](#job-scheduling-problem)
+12. [Constraint Satisfaction Problem (CSP)](#constraint-satisfaction-problem-csp)
+13. [Fibonacci Sequence Problem](#fibonacci-sequence-problem)
+
+
+    
 ---
 
 ### **1. Golomb Ruler Problem**
