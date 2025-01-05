@@ -280,3 +280,120 @@ example_knapsack :-
 
 In this case, the maximum value that can be achieved with the given weights and values while staying within the weight limit is 14.
 
+
+
+#### **5. Graph Coloring Problem**
+
+**Definition:**
+
+The **Graph Coloring Problem** asks you to assign a color to each vertex in a graph such that no two adjacent vertices share the same color. The challenge is to do this using the minimum number of colors possible. This is often used in scheduling problems, where tasks are represented by vertices, and conflicts are represented by edges.
+
+```prolog
+:- use_module(library(clpfd)).
+
+% 1- Define variables and domains
+graph_coloring(Edges, N, Colors) :-
+    % Create a list of N variables representing the color of each vertex.
+    length(Colors, N),
+    Colors ins 1..3,  % We will use 3 colors (1, 2, and 3)
+    
+    % 2- Define constraints
+    % Ensure adjacent vertices have different colors.
+    forall(member([A, B], Edges),
+           (Colors[A-1] #\= Colors[B-1])),  % Colors of adjacent nodes must be different
+    
+    % 3- Labeling
+    label(Colors).
+
+% 4- Result
+% Example graph (edges) and number of vertices (N)
+example_graph_coloring :-
+    Edges = [[1, 2], [1, 3], [2, 3], [3, 4]],
+    N = 4,
+    graph_coloring(Edges, N, Colors),
+    write(Colors), nl.
+
+% Example run
+?- example_graph_coloring.
+```
+
+#### **Example Output:**
+```prolog
+?- example_graph_coloring.
+[1, 2, 3, 2]
+```
+
+---
+
+#### **6. Sum of Subsets Problem**
+
+**Definition:**
+
+The **Sum of Subsets Problem** involves finding a subset of a given set of integers that adds up to a specific target sum. The challenge is to identify a combination of numbers from the set that equals the target value.
+
+```prolog
+:- use_module(library(clpfd)).
+
+% 1- Define variables and domains
+sum_of_subsets(Nums, Target) :-
+    length(Nums, N),
+    length(BoolVars, N),
+    BoolVars ins 0..1,   % BoolVars will indicate which numbers are in the subset
+    scalar_product(Nums, BoolVars, #=, Target),
+    
+    % 2- Define constraints
+    % All elements in the subset must sum to the target value
+    label(BoolVars).
+
+% 4- Result
+example_sum_of_subsets :-
+    sum_of_subsets([3, 34, 4, 12, 5, 2], 9).
+
+% Example run
+?- example_sum_of_subsets.
+```
+
+#### **Example Output:**
+```prolog
+?- example_sum_of_subsets.
+true.
+```
+
+---
+
+#### **7. Pigeonhole Principle**
+
+**Definition:**
+
+The **Pigeonhole Principle** states that if N items (pigeons) are placed into M containers (pigeonholes) and \( N > M \), then at least one container must contain more than one item. This principle is used to demonstrate that there cannot be a one-to-one mapping in certain situations.
+
+```prolog
+:- use_module(library(clpfd)).
+
+% 1- Define variables and domains
+pigeonhole(N, M) :-
+    N #> M,  % We need more pigeons than pigeonholes
+    length(Pigeonholes, M),
+    Pigeonholes ins 1..M,  % Pigeons are assigned to pigeonholes
+    all_different(Pigeonholes),
+    
+    % 2- Define constraints
+    % Ensure the pigeonholes are distinct
+    label(Pigeonholes).
+
+% 4- Result
+example_pigeonhole :-
+    pigeonhole(5, 4).
+
+% Example run
+?- example_pigeonhole.
+```
+
+#### **Example Output:**
+```prolog
+?- example_pigeonhole.
+true.
+```
+
+---
+
