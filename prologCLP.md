@@ -115,7 +115,113 @@ You can combine multiple constraints to form more complex conditions.
   X + Y #= Z, X #< 10.
   ```
 
+#### 2.6 **Recursive Constraints**
+Here are some recursive constraints where the size of the list is not known beforehand:
+
+##### 2.6.1 **Increasing Order Constraint**
+This constraint ensures that the elements of a list are in increasing order, regardless of its size:
+
+- A list is in increasing order if:
+  - An empty list is trivially in increasing order.
+  - A list with one element is trivially in increasing order.
+  - For a list with two or more elements, the first element must be less than the second element, and the rest of the list must also be in increasing order.
+  
+  ```prolog
+  increasing([]).
+  increasing([_]).
+  increasing([X, Y | Rest]) :- X #< Y, increasing([Y | Rest]).
+  ```
+
+##### 2.6.2 **Decreasing Order Constraint**
+This constraint ensures that the elements of a list are in decreasing order, recursively:
+
+- A list is in decreasing order if:
+  - An empty list is trivially in decreasing order.
+  - A list with one element is trivially in decreasing order.
+  - For a list with two or more elements, the first element must be greater than the second element, and the rest of the list must also be in decreasing order.
+  
+  ```prolog
+  decreasing([]).
+  decreasing([_]).
+  decreasing([X, Y | Rest]) :- X #> Y, decreasing([Y | Rest]).
+  ```
+
+##### 2.6.3 **Sum of List Constraint**
+This constraint ensures that the sum of a list of numbers is equal to a certain value:
+
+- The sum of an empty list is zero.
+- For a non-empty list, the sum is the head element plus the sum of the rest of the list.
+  
+  ```prolog
+  sum_list([], 0).
+  sum_list([X | Rest], Sum) :- sum_list(Rest, RestSum), Sum #= X + RestSum.
+  ```
+
+##### 2.6.4 **Non-negative List Constraint**
+This constraint ensures that all elements of a list are non-negative numbers:
+
+- A list is non-negative if each element is greater than or equal to zero.
+  
+  ```prolog
+  non_negative([]).
+  non_negative([X | Rest]) :- X #>= 0, non_negative(Rest).
+  ```
+
+##### 2.6.5 **Max of List Constraint**
+This constraint ensures that a list has a maximum element, where the maximum is greater than or equal to every other element in the list:
+
+- A list is valid if it contains one element that is greater than or equal to all the other elements.
+  
+  ```prolog
+  max_list([X], X).
+  max_list([X | Rest], Max) :- max_list(Rest, RestMax), Max #= max(X, RestMax).
+  ```
+
+##### 2.6.6 **Min of List Constraint**
+This constraint ensures that a list has a minimum element, where the minimum is less than or equal to every other element in the list:
+
+- A list is valid if it contains one element that is less than or equal to all the other elements.
+  
+  ```prolog
+  min_list([X], X).
+  min_list([X | Rest], Min) :- min_list(Rest, RestMin), Min #= min(X, RestMin).
+  ```
+
+##### 2.6.7 **Element Constraints (Custom)**
+This constraint ensures that a specific element in the list matches a condition based on recursive traversal of the list.
+
+- For example, ensuring that an element `X` appears exactly once in a list:
+  
+  ```prolog
+  contains_one([X], X).
+  contains_one([Y | Rest], X) :- contains_one(Rest, X).
+  ```
+
+##### 2.6.8 **All Positive Integers Constraint**
+This ensures that all elements in a list are positive integers.
+
+- A list is valid if all elements are greater than zero:
+  
+  ```prolog
+  all_positive([]).
+  all_positive([X | Rest]) :- X #> 0, all_positive(Rest).
+  ```
+
+##### 2.6.9 **Equal Distribution Constraint**
+This constraint ensures that a list of variables is evenly distributed across a given range.
+
+- A list of variables should be equally distributed in a range from `1` to `N`:
+  
+  ```prolog
+  equal_distribution(List, N) :- 
+      length(List, L), 
+      L #= N, 
+      all_different(List), 
+      List ins 1..N.
+  ```
+
 ---
+
 
 ### 3. **Labeling**
 Labeling is the process of assigning concrete values to the variables, respecting the domain and constraints.
