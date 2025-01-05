@@ -1,6 +1,4 @@
-## **Index**
-1. [Golomb Ruler Problem](#golomb-ruler-problem)
-2. [Sudoku Puzzle](#sudoku-puzzle)
+Sure, here's the revised version of the **Golomb Ruler Problem** and the **Sudoku Puzzle** with the definitions written in plain text and formatted for GitHub. I've removed the summary and comments, as well as the mathematical notations that can't be easily expressed in plain text.
 
 ---
 
@@ -8,25 +6,23 @@
 
 **Definition:**
 
-A **Golomb ruler** of order N and length M is a set of N natural numbers \( t_1, t_2, \dots, t_N \) such that:
+A **Golomb ruler** of order N and length M is a set of N distinct integers such that:
 
-1. The numbers are strictly increasing: \( t_1 < t_2 < \dots < t_N \)
-2. The length of the ruler is defined as \( M = t_N - t_1 \)
-3. The differences between any two distinct numbers in the set must be distinct, i.e., \( t_j - t_i \neq t_k - t_l \) for all \( i < j \) and \( k < l \)
+1. The integers are strictly increasing: \( t1 < t2 < ... < tN \)
+2. The length of the ruler is defined as \( M = tN - t1 \)
+3. The differences between any two distinct integers in the set must be distinct.
 
 In simpler terms, a Golomb ruler is a set of numbers placed on a line such that the distances between every pair of numbers are unique.
 
-For example, a Golomb ruler of order 4 and length 6 could be [0, 1, 4, 6], as the distances between different pairs of numbers are: 
-- \( 1 - 0 = 1 \)
-- \( 4 - 0 = 4 \)
-- \( 6 - 0 = 6 \)
-- \( 4 - 1 = 3 \)
-- \( 6 - 1 = 5 \)
-- \( 6 - 4 = 2 \)
+For example, a Golomb ruler of order 4 and length 6 could be [0, 1, 4, 6], as the distances between different pairs of numbers are:
+- 1 - 0 = 1
+- 4 - 0 = 4
+- 6 - 0 = 6
+- 4 - 1 = 3
+- 6 - 1 = 5
+- 6 - 4 = 2
 
 The goal is to find such a set of numbers for a given order N and length M.
-
----
 
 ```prolog
 :- use_module(library(clpfd)).
@@ -73,14 +69,6 @@ example_golomb :-
 ?- example_golomb.
 ```
 
-#### **Example Output:**
-```prolog
-?- example_golomb.
-[0, 1, 4, 6]
-```
-
-In this example, the output shows that the Golomb ruler of order 4 and length 6 is [0, 1, 4, 6], where all pairwise differences are distinct.
-
 ---
 
 ### **2. Sudoku Puzzle**
@@ -104,8 +92,6 @@ _ _ _ _ 8 _ _ 7 9
 ```
 
 The goal is to fill in the blank cells while respecting the Sudoku rules.
-
----
 
 ```prolog
 :- use_module(library(clpfd)).
@@ -153,18 +139,6 @@ example_sudoku :-
 ?- example_sudoku.
 ```
 
-#### **Example Output:**
-```prolog
-?- example_sudoku.
-[[5, 3, 4, 6, 7, 8, 9, 1, 2], 
- [6, 7, 2, 1, 9, 5, 3, 4, 8],
- [1, 9, 8, 3, 4, 2, 5, 6, 7],
- [8, 5, 9, 7, 6, 1, 4, 2, 3],
- [4, 2, 6, 8, 5, 3, 7, 9, 1],
- [7, 1, 3, 9, 2, 4, 8, 5, 6],
- [9, 6, 1, 5, 3, 7, 2, 8, 4],
- [2, 8, 7, 4, 1, 9, 6, 3, 5],
- [3, 4, 5, 2, 8, 6, 1, 7, 9]]
-```
-
 ---
+
+Let me know if you need further adjustments or additional problems!
