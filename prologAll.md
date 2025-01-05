@@ -393,10 +393,11 @@ Understanding operator precedence and associativity is crucial to correctly inte
   happy(Person) :- has_money(Person), healthy(Person).
   ```
 
+### 1.3. Lists in Prolog
 
-### 1.3. Lists
+Lists are fundamental data structures in Prolog, representing ordered collections of elements. They are versatile and widely used in various algorithms and data manipulations. This section provides an organized overview of list operations, predicates, and typical examples to enhance your Prolog programming skills.
 
-Lists are fundamental data structures in Prolog, representing ordered collections of elements. They are versatile and widely used in various algorithms and data manipulations.
+---
 
 #### **1.3.1. List Basics**
 
@@ -414,9 +415,11 @@ Lists are fundamental data structures in Prolog, representing ordered collection
   [g01, "task", 3, [sublist]].
   ```
 
+---
+
 #### **1.3.2. Head and Tail**
 
-- **Definition**: The first element of a list is the head, and the remainder of the list is the tail.
+- **Definition**: The first element of a list is the **head**, and the remainder of the list is the **tail**.
 - **Syntax**: `[Head|Tail]`
 - **Examples**:
   ```prolog
@@ -426,12 +429,16 @@ Lists are fundamental data structures in Prolog, representing ordered collection
   % T = [b, c, d]
   ```
 
+---
+
 #### **1.3.3. Common List Predicates**
+
+These predicates are essential for basic list manipulations and queries.
 
 1. **`member/2`**
    - **Purpose**: Checks if an element is part of a list.
    - **Syntax**: `member(Element, List).`
-   - **Example**:
+   - **Examples**:
      ```prolog
      ?- member(b, [a, b, c]).
      true.
@@ -439,17 +446,28 @@ Lists are fundamental data structures in Prolog, representing ordered collection
      ?- member(d, [a, b, c]).
      false.
      ```
-
    - **Usage in Definitions**:
      ```prolog
      % Define blocked hours
      blocked(G, H) :- notAvailable(G, L), member(H, L).
      ```
 
-2. **`append/3`**
+2. **`memberchk/2`**
+   - **Purpose**: Similar to `member/2` but stops after finding the first occurrence (non-backtracking).
+   - **Syntax**: `memberchk(Element, List).`
+   - **Examples**:
+     ```prolog
+     ?- memberchk(b, [a, b, c]).
+     true.
+     
+     ?- memberchk(d, [a, b, c]).
+     false.
+     ```
+
+3. **`append/3`**
    - **Purpose**: Concatenates two lists.
    - **Syntax**: `append(List1, List2, Result).`
-   - **Example**:
+   - **Examples**:
      ```prolog
      ?- append([a, b], [c, d], X).
      X = [a, b, c, d].
@@ -465,10 +483,10 @@ Lists are fundamental data structures in Prolog, representing ordered collection
      Y = [].
      ```
 
-3. **`length/2`**
+4. **`length/2`**
    - **Purpose**: Determines the length of a list or creates a list of a certain length.
    - **Syntax**: `length(List, Length).`
-   - **Example**:
+   - **Examples**:
      ```prolog
      ?- length([a, b, c], N).
      N = 3.
@@ -477,10 +495,10 @@ Lists are fundamental data structures in Prolog, representing ordered collection
      X = [_G1, _G2].
      ```
 
-4. **`nth1/3`**
+5. **`nth1/3`**
    - **Purpose**: Retrieves the N-th element from a list (1-based indexing).
    - **Syntax**: `nth1(Index, List, Element).`
-   - **Example**:
+   - **Examples**:
      ```prolog
      ?- nth1(2, [a, b, c], X).
      X = b.
@@ -489,34 +507,20 @@ Lists are fundamental data structures in Prolog, representing ordered collection
      false.
      ```
 
-5. **`findall/3`**
+6. **`findall/3`**
    - **Purpose**: Collects all possible solutions that satisfy a certain condition into a list.
    - **Syntax**: `findall(Template, Goal, List).`
-   - **Example**:
+   - **Examples**:
      ```prolog
      % Collect all even numbers from 1 to 5
      ?- findall(X, (between(1, 5, X), X mod 2 =:= 0), L).
      L = [2, 4].
      ```
 
-6. **`maplist/2` and `maplist/3`**
-   - **Purpose**: Applies a predicate to each element of a list.
-   - **Syntax**:
-     - `maplist(Predicate, List).`
-     - `maplist(Predicate, List1, List2).`
-   - **Example**:
-     ```prolog
-     % Increment each number in the list
-     increment(X, Y) :- Y is X + 1.
-     
-     ?- maplist(increment, [1, 2, 3], L).
-     L = [2, 3, 4].
-     ```
-
 7. **`select/3`**
    - **Purpose**: Selects an element from a list, returning the element and the remaining list.
    - **Syntax**: `select(Element, List, Rest).`
-   - **Example**:
+   - **Examples**:
      ```prolog
      ?- select(b, [a, b, c], X).
      X = [a, c].
@@ -528,7 +532,7 @@ Lists are fundamental data structures in Prolog, representing ordered collection
 8. **`reverse/2`**
    - **Purpose**: Reverses a list.
    - **Syntax**: `reverse(List, Reversed).`
-   - **Example**:
+   - **Examples**:
      ```prolog
      ?- reverse([a, b, c], X).
      X = [c, b, a].
@@ -537,7 +541,7 @@ Lists are fundamental data structures in Prolog, representing ordered collection
 9. **`last/2`**
    - **Purpose**: Retrieves the last element of a list.
    - **Syntax**: `last(List, Element).`
-   - **Example**:
+   - **Examples**:
      ```prolog
      ?- last([a, b, c], X).
      X = c.
@@ -546,22 +550,10 @@ Lists are fundamental data structures in Prolog, representing ordered collection
      X = 3.
      ```
 
-10. **`memberchk/2`**
-    - **Purpose**: Checks if an element is part of a list and cuts the search once it finds the first match (non-backtracking).
-    - **Syntax**: `memberchk(Element, List).`
-    - **Example**:
-      ```prolog
-      ?- memberchk(b, [a, b, c]).
-      true.
-      
-      ?- memberchk(d, [a, b, c]).
-      false.
-      ```
-
-11. **`delete/3`**
+10. **`delete/3`**
     - **Purpose**: Removes all occurrences of an element from a list.
     - **Syntax**: `delete(List, Element, Result).`
-    - **Example**:
+    - **Examples**:
       ```prolog
       ?- delete([a, b, c, b], b, X).
       X = [a, c].
@@ -570,10 +562,10 @@ Lists are fundamental data structures in Prolog, representing ordered collection
       X = [1, 3].
       ```
 
-12. **`union/3`**
+11. **`union/3`**
     - **Purpose**: Computes the union of two lists, removing duplicates.
     - **Syntax**: `union(List1, List2, Union).`
-    - **Example**:
+    - **Examples**:
       ```prolog
       ?- union([a, b, c], [b, c, d], X).
       X = [a, b, c, d].
@@ -582,10 +574,10 @@ Lists are fundamental data structures in Prolog, representing ordered collection
       X = [1, 2, 3, 4, 5].
       ```
 
-13. **`intersection/3`**
+12. **`intersection/3`**
     - **Purpose**: Computes the intersection of two lists, retaining only common elements.
     - **Syntax**: `intersection(List1, List2, Intersection).`
-    - **Example**:
+    - **Examples**:
       ```prolog
       ?- intersection([a, b, c], [b, c, d], X).
       X = [b, c].
@@ -594,58 +586,34 @@ Lists are fundamental data structures in Prolog, representing ordered collection
       X = [3].
       ```
 
-#### **1.3.4. Recursive List Processing**
+---
 
-Many list operations in Prolog are defined recursively. Understanding recursion is key to manipulating lists effectively.
+#### **1.3.4. Advanced List Predicates**
 
-- **Example: Summing Elements in a List**
-  ```prolog
-  sum_list([], 0).
-  sum_list([H|T], Sum) :-
-      sum_list(T, Rest),
-      Sum is H + Rest.
-  
-  % Usage:
-  ?- sum_list([1, 2, 3, 4], Sum).
-  Sum = 10.
-  ```
+These predicates offer more specialized operations for list manipulation.
 
-- **Example: Finding the Maximum Element**
-  ```prolog
-  max_list([X], X).
-  max_list([H|T], Max) :-
-      max_list(T, TempMax),
-      Max is max(H, TempMax).
-  
-  % Usage:
-  ?- max_list([3, 1, 4, 2], Max).
-  Max = 4.
-  ```
-
-#### **1.3.5. Additional List Predicates**
-
-12. **`sort/2`**
+13. **`sort/2`**
     - **Purpose**: Sorts a list in ascending order, removing duplicate elements.
     - **Syntax**: `sort(UnsortedList, SortedList).`
-    - **Example**:
+    - **Examples**:
       ```prolog
       ?- sort([3, 1, 2, 3, 4, 2], X).
       X = [1, 2, 3, 4].
       ```
 
-13. **`msort/2`**
+14. **`msort/2`**
     - **Purpose**: Sorts a list in ascending order, preserving duplicate elements.
     - **Syntax**: `msort(UnsortedList, SortedList).`
-    - **Example**:
+    - **Examples**:
       ```prolog
       ?- msort([3, 1, 2, 3, 4, 2], X).
       X = [1, 2, 2, 3, 3, 4].
       ```
 
-14. **`unique/2`**
+15. **`unique/2`**
     - **Purpose**: Removes duplicate elements from a list while preserving the original order.
     - **Syntax**: `unique(List, UniqueList).`
-    - **Example**:
+    - **Implementation**:
       ```prolog
       unique([], []).
       unique([H|T], [H|UniqueT]) :-
@@ -654,16 +622,17 @@ Many list operations in Prolog are defined recursively. Understanding recursion 
       unique([H|T], UniqueT) :-
           member(H, T),
           unique(T, UniqueT).
-      
-      % Usage:
+      ```
+    - **Examples**:
+      ```prolog
       ?- unique([1, 2, 3, 2, 4, 1], X).
       X = [1, 2, 3, 4].
       ```
 
-15. **`intersect/3`**
+16. **`intersect/3`**
     - **Purpose**: Finds the intersection of two lists.
     - **Syntax**: `intersect(List1, List2, Intersection).`
-    - **Example**:
+    - **Implementation**:
       ```prolog
       intersect([], _, []).
       intersect([H|T], List2, [H|Intersection]) :-
@@ -672,20 +641,16 @@ Many list operations in Prolog are defined recursively. Understanding recursion 
       intersect([H|T], List2, Intersection) :-
           \+ member(H, List2),
           intersect(T, List2, Intersection).
-      
-      % Usage:
+      ```
+    - **Examples**:
+      ```prolog
       ?- intersect([1, 2, 3, 4], [3, 4, 5, 6], X).
       X = [3, 4].
       ```
 
-16. **`max_list/2`**
+17. **`max_list/2`**
     - **Purpose**: Finds the maximum element in a list.
     - **Syntax**: `max_list(List, Max).`
-    - **Example**:
-      ```prolog
-      ?- max_list([3, 1, 4, 2], Max).
-      Max = 4.
-      ```
     - **Implementation**:
       ```prolog
       max_list([X], X).
@@ -693,15 +658,15 @@ Many list operations in Prolog are defined recursively. Understanding recursion 
           max_list(T, TempMax),
           Max is max(H, TempMax).
       ```
+    - **Examples**:
+      ```prolog
+      ?- max_list([3, 1, 4, 2], Max).
+      Max = 4.
+      ```
 
-17. **`min_list/2`**
+18. **`min_list/2`**
     - **Purpose**: Finds the minimum element in a list.
     - **Syntax**: `min_list(List, Min).`
-    - **Example**:
-      ```prolog
-      ?- min_list([3, 1, 4, 2], Min).
-      Min = 1.
-      ```
     - **Implementation**:
       ```prolog
       min_list([X], X).
@@ -709,15 +674,15 @@ Many list operations in Prolog are defined recursively. Understanding recursion 
           min_list(T, TempMin),
           Min is min(H, TempMin).
       ```
+    - **Examples**:
+      ```prolog
+      ?- min_list([3, 1, 4, 2], Min).
+      Min = 1.
+      ```
 
-18. **`sum_list/2`**
+19. **`sum_list/2`**
     - **Purpose**: Calculates the sum of all elements in a list.
     - **Syntax**: `sum_list(List, Sum).`
-    - **Example**:
-      ```prolog
-      ?- sum_list([1, 2, 3, 4], Sum).
-      Sum = 10.
-      ```
     - **Implementation**:
       ```prolog
       sum_list([], 0).
@@ -725,15 +690,15 @@ Many list operations in Prolog are defined recursively. Understanding recursion 
           sum_list(T, Rest),
           Sum is H + Rest.
       ```
+    - **Examples**:
+      ```prolog
+      ?- sum_list([1, 2, 3, 4], Sum).
+      Sum = 10.
+      ```
 
-19. **`product_list/2`**
+20. **`product_list/2`**
     - **Purpose**: Calculates the product of all elements in a list.
     - **Syntax**: `product_list(List, Product).`
-    - **Example**:
-      ```prolog
-      ?- product_list([1, 2, 3, 4], Product).
-      Product = 24.
-      ```
     - **Implementation**:
       ```prolog
       product_list([], 1).
@@ -741,15 +706,15 @@ Many list operations in Prolog are defined recursively. Understanding recursion 
           product_list(T, Rest),
           Product is H * Rest.
       ```
+    - **Examples**:
+      ```prolog
+      ?- product_list([1, 2, 3, 4], Product).
+      Product = 24.
+      ```
 
-20. **`average_list/2`**
+21. **`average_list/2`**
     - **Purpose**: Calculates the average of the elements in a list.
     - **Syntax**: `average_list(List, Average).`
-    - **Example**:
-      ```prolog
-      ?- average_list([1, 2, 3, 4], Avg).
-      Avg = 2.5.
-      ```
     - **Implementation**:
       ```prolog
       average_list(List, Avg) :-
@@ -758,13 +723,311 @@ Many list operations in Prolog are defined recursively. Understanding recursion 
           Length > 0,
           Avg is Sum / Length.
       ```
+    - **Examples**:
+      ```prolog
+      ?- average_list([1, 2, 3, 4], Avg).
+      Avg = 2.5.
+      ```
 
-#### **1.3.6. Typical Examples**
+---
 
-Prolog is well-suited for defining mathematical and algorithmic concepts using lists. Below are five typical examples:
+#### **1.3.5. Haskell-like List Functions**
+
+Incorporating functional programming paradigms, these predicates mimic Haskell's powerful list operations.
+
+22. **`take/3`**
+    - **Purpose**: Takes the first N elements from a list.
+    - **Syntax**: `take(N, List, Taken).`
+    - **Implementation**:
+      ```prolog
+      take(0, _, []).
+      take(_, [], []).
+      take(N, [H|T], [H|Taken]) :-
+          N > 0,
+          N1 is N - 1,
+          take(N1, T, Taken).
+      ```
+    - **Examples**:
+      ```prolog
+      ?- take(2, [a, b, c, d], X).
+      X = [a, b].
+      
+      ?- take(5, [1, 2, 3], X).
+      X = [1, 2, 3].
+      ```
+
+23. **`drop/3`**
+    - **Purpose**: Drops the first N elements from a list.
+    - **Syntax**: `drop(N, List, Dropped).`
+    - **Implementation**:
+      ```prolog
+      drop(0, List, List).
+      drop(_, [], []).
+      drop(N, [_|T], Dropped) :-
+          N > 0,
+          N1 is N - 1,
+          drop(N1, T, Dropped).
+      ```
+    - **Examples**:
+      ```prolog
+      ?- drop(2, [a, b, c, d], X).
+      X = [c, d].
+      
+      ?- drop(5, [1, 2, 3], X).
+      X = [].
+      ```
+
+24. **`takewhile/3`**
+    - **Purpose**: Takes elements from the list while a condition holds.
+    - **Syntax**: `takewhile(Predicate, List, Taken).`
+    - **Implementation**:
+      ```prolog
+      takewhile(_, [], []).
+      takewhile(P, [H|T], [H|Taken]) :-
+          call(P, H),
+          takewhile(P, T, Taken).
+      takewhile(P, [H|_], []) :-
+          \+ call(P, H).
+      ```
+    - **Examples**:
+      ```prolog
+      % Predicate to check if a number is less than 4
+      less_than_4(X) :- X < 4.
+      
+      ?- takewhile(less_than_4, [1, 2, 3, 4, 1], X).
+      X = [1, 2, 3].
+      ```
+
+25. **`dropwhile/3`**
+    - **Purpose**: Drops elements from the list while a condition holds and returns the rest.
+    - **Syntax**: `dropwhile(Predicate, List, Dropped).`
+    - **Implementation**:
+      ```prolog
+      dropwhile(_, [], []).
+      dropwhile(P, [H|T], Dropped) :-
+          call(P, H),
+          dropwhile(P, T, Dropped).
+      dropwhile(P, List, List) :-
+          List \= [],
+          \+ ( [H|_] = List, call(P, H) ).
+      ```
+    - **Examples**:
+      ```prolog
+      % Predicate to check if a number is less than 4
+      less_than_4(X) :- X < 4.
+      
+      ?- dropwhile(less_than_4, [1, 2, 3, 4, 1], X).
+      X = [4, 1].
+      
+      ?- dropwhile(less_than_4, [5, 6, 1], X).
+      X = [5, 6, 1].
+      ```
+
+26. **`split_at/4`**
+    - **Purpose**: Splits a list at the N-th position into two lists.
+    - **Syntax**: `split_at(N, List, Left, Right).`
+    - **Implementation**:
+      ```prolog
+      split_at(0, List, [], List).
+      split_at(_, [], [], []).
+      split_at(N, [H|T], [H|Left], Right) :-
+          N > 0,
+          N1 is N - 1,
+          split_at(N1, T, Left, Right).
+      ```
+    - **Examples**:
+      ```prolog
+      ?- split_at(2, [a, b, c, d], Left, Right).
+      Left = [a, b],
+      Right = [c, d].
+      
+      ?- split_at(5, [1, 2, 3], Left, Right).
+      Left = [1, 2, 3],
+      Right = [].
+      ```
+
+27. **`zip/3`**
+    - **Purpose**: Zips two lists into a list of pairs.
+    - **Syntax**: `zip(List1, List2, Zipped).`
+    - **Implementation**:
+      ```prolog
+      zip([], _, []).
+      zip(_, [], []).
+      zip([H1|T1], [H2|T2], [[H1, H2]|Zipped]) :-
+          zip(T1, T2, Zipped).
+      ```
+    - **Examples**:
+      ```prolog
+      ?- zip([a, b, c], [1, 2, 3], X).
+      X = [[a, 1], [b, 2], [c, 3]].
+      
+      ?- zip([a, b], [1, 2, 3], X).
+      X = [[a, 1], [b, 2]].
+      ```
+
+---
+
+#### **1.3.6. Recursive List Processing**
+
+Many list operations in Prolog are defined recursively. Understanding recursion is key to manipulating lists effectively.
+
+1. **Summing Elements in a List**
+   ```prolog
+   sum_list([], 0).
+   sum_list([H|T], Sum) :-
+       sum_list(T, Rest),
+       Sum is H + Rest.
+   
+   % Usage:
+   ?- sum_list([1, 2, 3, 4], Sum).
+   Sum = 10.
+   ```
+
+2. **Finding the Maximum Element**
+   ```prolog
+   max_list([X], X).
+   max_list([H|T], Max) :-
+       max_list(T, TempMax),
+       Max is max(H, TempMax).
+   
+   % Usage:
+   ?- max_list([3, 1, 4, 2], Max).
+   Max = 4.
+   ```
+
+3. **Finding the Minimum Element**
+   ```prolog
+   min_list([X], X).
+   min_list([H|T], Min) :-
+       min_list(T, TempMin),
+       Min is min(H, TempMin).
+   
+   % Usage:
+   ?- min_list([3, 1, 4, 2], Min).
+   Min = 1.
+   ```
+
+4. **Calculating the Product of Elements**
+   ```prolog
+   product_list([], 1).
+   product_list([H|T], Product) :-
+       product_list(T, Rest),
+       Product is H * Rest.
+   
+   % Usage:
+   ?- product_list([1, 2, 3, 4], Product).
+   Product = 24.
+   ```
+
+5. **Calculating the Average of Elements**
+   ```prolog
+   average_list(List, Avg) :-
+       sum_list(List, Sum),
+       length(List, Length),
+       Length > 0,
+       Avg is Sum / Length.
+   
+   % Usage:
+   ?- average_list([1, 2, 3, 4], Avg).
+   Avg = 2.5.
+   ```
+
+---
+
+#### **1.3.7. Haskell-like Higher-Order Functions**
+
+Prolog can emulate higher-order functions common in functional programming languages like Haskell. These predicates allow for more expressive and concise list manipulations.
+
+1. **`map/3`**
+   - **Purpose**: Applies a predicate to each element of a list.
+   - **Syntax**: `map(InputList, OutputList, Predicate).`
+   - **Implementation**:
+     ```prolog
+     map([], [], _F).
+     map([H|T], [H1|T1], F) :-
+         call(F, H, H1),
+         map(T, T1, F).
+     ```
+   - **Example Predicate**:
+     ```prolog
+     square(X, Y) :- Y is X * X.
+     ```
+   - **Usage**:
+     ```prolog
+     ?- map([1, 2, 3, 4], Squares, square).
+     Squares = [1, 4, 9, 16].
+     ```
+
+2. **`filter/3`**
+   - **Purpose**: Filters elements of a list based on a given predicate.
+   - **Syntax**: `filter(InputList, FilteredList, Predicate).`
+   - **Implementation**:
+     ```prolog
+     filter([], [], _Pred).
+     filter([H|T], [H|Filtered], Pred) :-
+         call(Pred, H),
+         filter(T, Filtered, Pred).
+     filter([_|T], Filtered, Pred) :-
+         filter(T, Filtered, Pred).
+     ```
+   - **Example Predicate**:
+     ```prolog
+     is_even(X) :- 0 is X mod 2.
+     ```
+   - **Usage**:
+     ```prolog
+     ?- filter([1, 2, 3, 4, 5, 6], Evens, is_even).
+     Evens = [2, 4, 6].
+     ```
+
+3. **`foldl/4`**
+   - **Purpose**: Folds a list from the left using a binary predicate and an initial accumulator.
+   - **Syntax**: `foldl(Predicate, List, Initial, Result).`
+   - **Implementation**:
+     ```prolog
+     foldl(_, [], Acc, Acc).
+     foldl(P, [H|T], Acc, Result) :-
+         call(P, H, Acc, Acc1),
+         foldl(P, T, Acc1, Result).
+     ```
+   - **Example Predicate**:
+     ```prolog
+     add(X, Acc, Acc1) :- Acc1 is Acc + X.
+     ```
+   - **Usage**:
+     ```prolog
+     ?- foldl(add, [1, 2, 3, 4], 0, Sum).
+     Sum = 10.
+     ```
+
+4. **`foldr/4`**
+   - **Purpose**: Folds a list from the right using a binary predicate and an initial accumulator.
+   - **Syntax**: `foldr(Predicate, List, Initial, Result).`
+   - **Implementation**:
+     ```prolog
+     foldr(_, [], Acc, Acc).
+     foldr(P, [H|T], Acc, Result) :-
+         foldr(P, T, Acc, Acc1),
+         call(P, H, Acc1, Result).
+     ```
+   - **Example Predicate**:
+     ```prolog
+     multiply(X, Acc, Acc1) :- Acc1 is X * Acc.
+     ```
+   - **Usage**:
+     ```prolog
+     ?- foldr(multiply, [1, 2, 3, 4], 1, Product).
+     Product = 24.
+     ```
+
+---
+
+#### **1.3.8. Typical Examples**
+
+Prolog is well-suited for defining mathematical and algorithmic concepts using lists. Below are several typical examples that demonstrate practical applications of list manipulation.
 
 1. **Factorial**
-
+   
    - **Definition**: Calculates the factorial of a non-negative integer.
    - **Implementation**:
      ```prolog
@@ -781,7 +1044,7 @@ Prolog is well-suited for defining mathematical and algorithmic concepts using l
      ```
 
 2. **Fibonacci**
-
+   
    - **Definition**: Computes the N-th Fibonacci number.
    - **Implementation**:
      ```prolog
@@ -801,7 +1064,7 @@ Prolog is well-suited for defining mathematical and algorithmic concepts using l
      ```
 
 3. **Reverse a List**
-
+   
    - **Definition**: Reverses the elements of a list.
    - **Implementation**:
      ```prolog
@@ -816,7 +1079,7 @@ Prolog is well-suited for defining mathematical and algorithmic concepts using l
      ```
 
 4. **Palindrome Check**
-
+   
    - **Definition**: Determines whether a list is a palindrome.
    - **Implementation**:
      ```prolog
@@ -832,7 +1095,7 @@ Prolog is well-suited for defining mathematical and algorithmic concepts using l
      ```
 
 5. **Merge Sort**
-
+   
    - **Definition**: Sorts a list using the merge sort algorithm.
    - **Implementation**:
      ```prolog
@@ -866,7 +1129,7 @@ Prolog is well-suited for defining mathematical and algorithmic concepts using l
      ```
 
 6. **Map Function**
-
+   
    - **Definition**: Applies a given function to each element of a list.
    - **Implementation**:
      ```prolog
@@ -884,7 +1147,7 @@ Prolog is well-suited for defining mathematical and algorithmic concepts using l
      ```
 
 7. **Filter Function**
-
+   
    - **Definition**: Filters elements of a list based on a given predicate.
    - **Implementation**:
      ```prolog
@@ -904,7 +1167,7 @@ Prolog is well-suited for defining mathematical and algorithmic concepts using l
      ```
 
 8. **Flatten a Nested List**
-
+   
    - **Definition**: Flattens a nested list structure into a single-level list.
    - **Implementation**:
      ```prolog
@@ -922,7 +1185,7 @@ Prolog is well-suited for defining mathematical and algorithmic concepts using l
      ```
 
 9. **Maximum Element Using `max_list/2`**
-
+   
    - **Definition**: Finds the maximum element in a list.
    - **Implementation**:
      ```prolog
@@ -935,8 +1198,8 @@ Prolog is well-suited for defining mathematical and algorithmic concepts using l
      ?- max_list([3, 1, 4, 2], Max).
      Max = 4.
      ```
+ ---
 
-These predicates and examples provide a solid foundation for working with lists in Prolog, enabling the implementation of complex data manipulations and algorithms.
 
 ### 1.4. Advanced Predicates
 
