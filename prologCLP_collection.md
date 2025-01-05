@@ -1,4 +1,3 @@
-```markdown
 ## **Index**
 
 1. [Golomb Ruler Problem](#golomb-ruler-problem)
