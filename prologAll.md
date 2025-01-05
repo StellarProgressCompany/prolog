@@ -533,44 +533,6 @@ Lists are fundamental data structures in Prolog, representing ordered collection
      X = [c, b, a].
      ```
 
-9. **`flatten/2`**
-   - **Purpose**: Flattens a nested list structure into a single-level list.
-   - **Syntax**: `flatten(NestedList, FlatList).`
-   - **Example**:
-     ```prolog
-     ?- flatten([a, [b, [c, d], e], f], X).
-     X = [a, b, c, d, e, f].
-     
-     ?- flatten(X, [1, [2, [3, 4]], 5], Flat).
-     X = [1, 2, 3, 4, 5],
-     Flat = [1, 2, 3, 4, 5].
-     ```
-
-10. **`exclude/3`**
-    - **Purpose**: Removes all elements from a list that satisfy a given predicate.
-    - **Syntax**: `exclude(Predicate, List, Result).`
-    - **Example**:
-      ```prolog
-      % Define a predicate for even numbers
-      is_even(X) :- 0 is X mod 2.
-      
-      ?- exclude(is_even, [1, 2, 3, 4, 5], L).
-      L = [1, 3, 5].
-      ```
-
-11. **`partition/4`**
-    - **Purpose**: Splits a list into two lists based on a predicate: one list for elements that satisfy the predicate and another for those that do not.
-    - **Syntax**: `partition(Predicate, List, Yes, No).`
-    - **Example**:
-      ```prolog
-      % Define a predicate for positive numbers
-      is_positive(X) :- X > 0.
-      
-      ?- partition(is_positive, [-1, 2, -3, 4, 0], Pos, Neg).
-      Pos = [2, 4],
-      Neg = [-1, -3, 0].
-      ```
-
 #### **1.3.4. Recursive List Processing**
 
 Many list operations in Prolog are defined recursively. Understanding recursion is key to manipulating lists effectively.
@@ -653,6 +615,87 @@ Many list operations in Prolog are defined recursively. Understanding recursion 
       % Usage:
       ?- intersect([1, 2, 3, 4], [3, 4, 5, 6], X).
       X = [3, 4].
+      ```
+
+16. **`max_list/2`**
+    - **Purpose**: Finds the maximum element in a list.
+    - **Syntax**: `max_list(List, Max).`
+    - **Example**:
+      ```prolog
+      ?- max_list([3, 1, 4, 2], Max).
+      Max = 4.
+      ```
+    - **Implementation**:
+      ```prolog
+      max_list([X], X).
+      max_list([H|T], Max) :-
+          max_list(T, TempMax),
+          Max is max(H, TempMax).
+      ```
+
+17. **`min_list/2`**
+    - **Purpose**: Finds the minimum element in a list.
+    - **Syntax**: `min_list(List, Min).`
+    - **Example**:
+      ```prolog
+      ?- min_list([3, 1, 4, 2], Min).
+      Min = 1.
+      ```
+    - **Implementation**:
+      ```prolog
+      min_list([X], X).
+      min_list([H|T], Min) :-
+          min_list(T, TempMin),
+          Min is min(H, TempMin).
+      ```
+
+18. **`sum_list/2`**
+    - **Purpose**: Calculates the sum of all elements in a list.
+    - **Syntax**: `sum_list(List, Sum).`
+    - **Example**:
+      ```prolog
+      ?- sum_list([1, 2, 3, 4], Sum).
+      Sum = 10.
+      ```
+    - **Implementation**:
+      ```prolog
+      sum_list([], 0).
+      sum_list([H|T], Sum) :-
+          sum_list(T, Rest),
+          Sum is H + Rest.
+      ```
+
+19. **`product_list/2`**
+    - **Purpose**: Calculates the product of all elements in a list.
+    - **Syntax**: `product_list(List, Product).`
+    - **Example**:
+      ```prolog
+      ?- product_list([1, 2, 3, 4], Product).
+      Product = 24.
+      ```
+    - **Implementation**:
+      ```prolog
+      product_list([], 1).
+      product_list([H|T], Product) :-
+          product_list(T, Rest),
+          Product is H * Rest.
+      ```
+
+20. **`average_list/2`**
+    - **Purpose**: Calculates the average of the elements in a list.
+    - **Syntax**: `average_list(List, Average).`
+    - **Example**:
+      ```prolog
+      ?- average_list([1, 2, 3, 4], Avg).
+      Avg = 2.5.
+      ```
+    - **Implementation**:
+      ```prolog
+      average_list(List, Avg) :-
+          sum_list(List, Sum),
+          length(List, Length),
+          Length > 0,
+          Avg is Sum / Length.
       ```
 
 #### **1.3.6. Typical Examples**
@@ -815,6 +858,21 @@ Prolog is well-suited for defining mathematical and algorithmic concepts using l
      % Usage:
      ?- flatten_list([a, [b, [c, d], e], f], X).
      X = [a, b, c, d, e, f].
+     ```
+
+9. **Maximum Element Using `max_list/2`**
+
+   - **Definition**: Finds the maximum element in a list.
+   - **Implementation**:
+     ```prolog
+     max_list([X], X).
+     max_list([H|T], Max) :-
+         max_list(T, TempMax),
+         Max is max(H, TempMax).
+     
+     % Usage:
+     ?- max_list([3, 1, 4, 2], Max).
+     Max = 4.
      ```
 
 These predicates and examples provide a solid foundation for working with lists in Prolog, enabling the implementation of complex data manipulations and algorithms.
