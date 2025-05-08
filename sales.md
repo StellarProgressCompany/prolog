@@ -1,6 +1,7 @@
 1-Hola Bon dia, parlo amb el responsable de X?
 
 1.1=>No: Podria parlar amb ell? Tinc una proposta de negoci que crec que li podria interessar.
+
 1.2=>Sí: 2.
 
 2.Em dic Oriol i sóc el propietari de Stellar Progress, una startup impulsada per la Universitat Politècnica Catalana en la que ajudem a restaurants locals a digitalitzar-se. Seré honest, aquesta setmana passada vaig decidir fer-te una demo de pàgina web del teu restaurant. M’agradaria ensenyar-te aquesta web que he fet per vosaltres.
