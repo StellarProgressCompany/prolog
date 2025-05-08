@@ -4,7 +4,7 @@
 
 1.2=>Sí: 2.
 
-2.Em dic Oriol i sóc el propietari de Stellar Progress, una startup impulsada per la Universitat Politècnica Catalana en la que ajudem a restaurants locals a digitalitzar-se. Seré honest, aquesta setmana passada vaig decidir fer-te una demo de pàgina web del teu restaurant. M’agradaria ensenyar-te aquesta web que he fet per vosaltres.
+2.Em dic Oriol i sóc el propietari de Stellar Progress ... som ...una startup impulsada per la Universitat Politècnica Catalana en la que ajudem a restaurants locals a digitalitzar-se. Seré honest, aquesta setmana passada vaig decidir fer-te una demo de pàgina web del teu restaurant. M’agradaria ensenyar-te aquesta web que he fet per vosaltres.
 
 3.Si t’agrada, t’ensenyaré com funciona tot i podem, potencialment presencialment, ensenyarte què ha preparat el meu equip pel teu restaurant.
 
